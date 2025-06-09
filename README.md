@@ -1,54 +1,100 @@
-# React + TypeScript + Vite
+# B2B Coffee Machine Rental & Sales Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📋 Описание проекта
 
-Currently, two official plugins are available:
+Современный лендинг для B2B компании, специализирующейся на **аренде и продаже кофемашин для бизнеса**. Сайт предназначен для привлечения корпоративных клиентов - офисов, кафе, ресторанов и других коммерческих предприятий, которым необходимо качественное кофейное оборудование.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Цели проекта
 
-## Expanding the ESLint configuration
+- **Генерация лидов** - привлечение потенциальных B2B клиентов
+- **Презентация услуг** - демонстрация ассортимента кофемашин и условий аренды/продажи  
+- **Конверсия в заявки** - удобные формы для записи на дегустацию и консультацию
+- **Построение доверия** - профессиональный дизайн и подробная информация о компании
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Функциональность
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Реализованные секции:
+- ✅ **Header** - навигация и контактная информация
+- ✅ **Hero Section** - главный экран с призывом к действию
+- ✅ **How It Works** - форма заявки с описанием процесса
+
+### Планируемые секции:
+- 🔄 **Каталог оборудования** - витрина кофемашин с фильтрами
+- 🔄 **Преимущества** - почему выбирают нашу компанию
+- 🔄 **Отзывы клиентов** - социальные доказательства
+- 🔄 **Контакты и локация** - карта и способы связи
+- 🔄 **Footer** - дополнительная информация и ссылки
+
+## 🛠 Технологический стек
+
+- **Frontend Framework:** React 18 + TypeScript
+- **Build Tool:** Vite
+- **Styling:** SCSS/Sass
+- **Responsive Design:** Mobile-first подход
+- **Version Control:** Git + GitHub
+- **Package Manager:** npm
+
+## 📱 Адаптивность
+
+Сайт полностью адаптирован для всех устройств:
+- 🖥 **Desktop** (1200px+)
+- 💻 **Laptop** (992px - 1199px)  
+- 📱 **Tablet** (768px - 991px)
+- 📱 **Mobile** (до 767px)
+
+## 🚀 Быстрый старт
+
+### Установка зависимостей
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Запуск в режиме разработки
+```bash
+npm run dev
 ```
+
+### Сборка для продакшена
+```bash
+npm run build
+```
+
+### Предварительный просмотр сборки
+```bash
+npm run preview
+```
+
+## 📁 Структура проекта
+
+```
+src/
+├── components/          # React компоненты
+│   ├── Header/         # Шапка сайта
+│   ├── Hero/           # Главная секция
+│   └── HowItWorks/     # Секция с формой заявки
+├── styles/             # Глобальные стили
+│   ├── global.scss     # Основные стили
+│   └── variables.scss  # SCSS переменные
+└── App.tsx             # Главный компонент приложения
+```
+
+## 🎨 Дизайн
+
+Дизайн-макеты находятся в папке `design_layout/` и включают:
+- Десктопные версии всех секций
+- Мобильные адаптации
+- Цветовая палитра
+- Компоненты и элементы интерфейса
+
+## 📞 Контакты
+
+**Телефон:** +7 (909) 945-76-04  
+**Репозиторий:** [GitHub](https://github.com/Alex7develop/b2b_rental_machine.git)
+
+## 📄 Лицензия
+
+Проект разработан для коммерческого использования.
+
+---
+
+*Создано с ❤️ для развития кофейного бизнеса*
