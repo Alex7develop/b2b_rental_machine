@@ -15,26 +15,7 @@ const CoffeeMachines: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'classic' | 'automatic'>('classic');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [slideWidth, setSlideWidth] = useState(320);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const updateSlideWidth = () => {
-      if (window.innerWidth <= 768) {
-        setSlideWidth(window.innerWidth - 32); // Полная ширина минус отступы
-      } else if (window.innerWidth <= 1024) {
-        setSlideWidth(256); // 240px + 16px gap
-      } else {
-        setSlideWidth(360); // 340px + 20px gap
-      }
-    };
-
-    updateSlideWidth();
-    window.addEventListener('resize', updateSlideWidth);
-
-    return () => window.removeEventListener('resize', updateSlideWidth);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,17 +39,6 @@ const CoffeeMachines: React.FC = () => {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Сброс слайда при смене таба
@@ -148,14 +118,6 @@ const CoffeeMachines: React.FC = () => {
 
   const currentMachines = activeTab === 'classic' ? classicMachines : automaticMachines;
   const maxSlide = Math.max(0, currentMachines.length - 3);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => Math.min(prev + 1, maxSlide));
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => Math.max(prev - 1, 0));
-  };
 
   const handleScrollbarClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();

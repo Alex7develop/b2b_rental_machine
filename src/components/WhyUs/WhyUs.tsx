@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import './WhyUs.scss';
 
 const WhyUs: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [animatedItems, setAnimatedItems] = useState<number[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
 
@@ -44,26 +44,23 @@ const WhyUs: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (stepsRef.current && sectionRef.current) {
-        const sectionRect = sectionRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
         
-        // Отключаем сворачивание - блоки просто исчезают
-        const shouldCollapse = false; // sectionRect.top < -sectionRect.height + 200;
-        
-        if (shouldCollapse !== isCollapsed) {
-          setIsCollapsed(shouldCollapse);
+        // Начинаем складывать гармошку когда секция поднимается выше 70% экрана
+        // Разворачиваем когда секция опускается ниже 80% экрана
+        if (rect.bottom < viewportHeight * 0.7) {
+          setIsCollapsed(true);
+        } else if (rect.bottom > viewportHeight * 0.8) {
+          setIsCollapsed(false);
         }
       }
     };
 
-    const throttledScroll = () => {
-      requestAnimationFrame(handleScroll);
-    };
-
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, [isCollapsed]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const steps = [
     {
@@ -107,7 +104,10 @@ const WhyUs: React.FC = () => {
               {steps.map((step, index) => (
                 <div 
                   key={index}
-                  className={`why-us__step ${animatedItems.includes(index) ? 'why-us__step--animated' : ''}`}
+                  className={`why-us__step ${animatedItems.includes(index) ? 'why-us__step--animated' : ''} ${isCollapsed ? 'why-us__step--collapsed' : ''}`}
+                  style={{ 
+                    transitionDelay: isCollapsed ? `${(steps.length - index - 1) * 0.1}s` : `${index * 0.1}s`
+                  }}
                 >
                   <div className="why-us__step-number">{step.number}</div>
                   <div className="why-us__step-content">
@@ -117,7 +117,10 @@ const WhyUs: React.FC = () => {
                 </div>
               ))}
               
-              <div className={`why-us__cta ${animatedItems.includes(4) ? 'why-us__cta--animated' : ''}`}>
+              <div className={`why-us__cta ${animatedItems.includes(4) ? 'why-us__cta--animated' : ''} ${isCollapsed ? 'why-us__cta--collapsed' : ''}`}
+                   style={{ 
+                     transitionDelay: isCollapsed ? '0s' : '0.4s'
+                   }}>
                 <div className="why-us__cta-number">05</div>
                 <div className="why-us__cta-content">
                   <div className="why-us__cta-title">
@@ -131,6 +134,42 @@ const WhyUs: React.FC = () => {
                       </svg>
                     </button>
                     <div className="why-us__cta-phone">+7 (909) 945-76-04</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Компактный вид гармошки */}
+            <div className={`why-us__accordion ${isCollapsed ? 'why-us__accordion--visible' : ''}`}>
+              {steps.map((step, index) => (
+                <div 
+                  key={`accordion-${index}`}
+                  className="why-us__accordion-item"
+                  style={{ 
+                    transitionDelay: isCollapsed ? `${index * 0.1}s` : `${(steps.length - index - 1) * 0.1}s`
+                  }}
+                >
+                  <div className="why-us__accordion-number">{step.number}</div>
+                  <div className="why-us__accordion-title">{step.title}</div>
+                  <div className="why-us__accordion-description">{step.description}</div>
+                </div>
+              ))}
+              
+              <div className="why-us__accordion-cta"
+                   style={{ 
+                     transitionDelay: isCollapsed ? '0.4s' : '0s'
+                   }}>
+                <div className="why-us__accordion-number">05</div>
+                <div className="why-us__accordion-content">
+                  <div className="why-us__accordion-title">
+                    Оставьте заявку — подберём кофемашину и кофе под ваш кейс
+                  </div>
+                  <div className="why-us__accordion-actions">
+                    <button className="why-us__accordion-button">
+                      Получить консультацию
+                      <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
+                    </button>
+                    <div className="why-us__accordion-phone">+7 (909) 945-76-04</div>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 .coffee-machines {
-  padding: 80px 0 120px;
+  // padding: 80px 0 120px;
   background: transparent;
   opacity: 0;
   transform: translateY(40px);
@@ -80,8 +80,8 @@
     position: relative;
 
     &--active {
-      color: #4f46e5;
-      border-bottom-color: #4f46e5;
+      color: rgb(38, 53, 140);;
+      border-bottom-color: rgb(38, 53, 140);;
     }
 
     &:hover:not(&--active) {
@@ -123,8 +123,8 @@
     }
 
     &:hover:not(&--disabled) {
-      border-color: #4f46e5;
-      color: #4f46e5;
+      border-color: rgb(38, 53, 140);
+      color: rgb(38, 53, 140);
       transform: scale(1.1);
     }
 
@@ -247,7 +247,7 @@
     font-weight: 600;
     color: #1e293b;
     text-decoration: underline;
-    text-decoration-color: #4f46e5;
+    text-decoration-color: rgb(38, 53, 140);
     text-underline-offset: 4px;
   }
 
@@ -256,7 +256,7 @@
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
-    background: #4f46e5;
+    background: rgb(38, 53, 140);
     color: white;
     border: none;
     border-radius: 8px;
