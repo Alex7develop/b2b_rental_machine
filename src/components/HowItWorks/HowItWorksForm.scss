@@ -1,16 +1,16 @@
 .howitworksform-block {
   position: relative;
-    margin: 24px auto 0 auto;
-    max-width: 1200px;
-    background: linear-gradient(120deg, rgba(39, 56, 137, 0.95) 60%, rgba(64, 81, 160, 0.95) 100%), url(/img/wave.jpg) center / cover no-repeat, #273889;
-    border-radius: 40px 0.5px 40px 0.5px;
-    box-shadow: 0 12px 48px rgba(39, 56, 137, 0.13);
-    padding: 17px 16px 16px 24px;
-    color: #fff;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  margin: 24px auto 0 auto;
+  max-width: 1200px;
+  background: linear-gradient(120deg, rgba(39, 56, 137, 0.95) 60%, rgba(64, 81, 160, 0.95) 100%), url(/img/wave.jpg) center / cover no-repeat, #273889;
+  border-radius: 40px 0.5px 40px 0.5px;
+  box-shadow: 0 12px 48px rgba(39, 56, 137, 0.13);
+  padding: 17px 16px 16px 24px;
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .howitworksform-phonebar {
@@ -66,6 +66,7 @@
   gap: 24px;
   margin-bottom: 24px;
 }
+
 .howitworksform-input {
   flex: 1 1 0;
   min-width: 0;
@@ -81,12 +82,19 @@
   transition: border 0.2s, background 0.2s;
   height: 56px;
   margin-bottom: 0;
+
+  &::placeholder {
+    color: #fff;
+    opacity: 0.8;
+    font-size: 18px;
+  }
+
+  &:focus {
+    border-color: rgba(255,255,255,0.8);
+    background: rgba(17,24,39,0.3);
+  }
 }
-.howitworksform-input::placeholder {
-  color: #fff;
-  opacity: 0.8;
-  font-size: 18px;
-}
+
 .howitworksform-submit {
   background: #fff;
   color: #273889;
@@ -105,70 +113,233 @@
   box-shadow: 0 2px 12px rgba(39,56,137,0.08);
   margin-left: 0;
   justify-content: center;
+
   &:hover {
     background: #4051a0;
     color: #fff;
   }
+
+  svg {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+  }
 }
-.howitworksform-submit svg {
-  width: 22px;
-  height: 22px;
-  display: inline-block;
-  vertical-align: middle;
-}
+
 .howitworksform-policy {
   font-size: 15px;
   color: #fff;
   margin-top: 8px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
+
   a {
     color: #fff;
     text-decoration: underline;
   }
+
   input[type='checkbox'] {
-    margin-top: 0;
+    margin-top: 2px;
     accent-color: #fff;
     width: 22px;
     height: 22px;
+    flex-shrink: 0;
+  }
+
+  label {
+    line-height: 1.4;
   }
 }
 
-@media (max-width: 1100px) {
+// Планшеты
+@media (max-width: 1024px) {
   .howitworksform-block {
-    padding: 32px 8px 24px 8px;
+    margin: 20px 16px 0 16px;
+    padding: 24px 20px 20px 20px;
+    border-radius: 24px 0.5px 24px 0.5px;
   }
+
   .howitworksform-phonebar {
-    left: 16px;
-    font-size: 18px;
-    padding: 8px 16px;
-    border-radius: 22px 0 0 22px;
-    min-width: 220px;
-    top: 16px;
+    left: -16px;
+    top: 32px;
+    font-size: 20px;
+    padding: 8px 12px 8px 20px;
+    min-width: 280px;
   }
+
+  .howitworksform-content {
+    margin-top: 56px;
+  }
+
+  .howitworksform-title {
+    font-size: 32px;
+    margin-left: 0;
+    margin-bottom: 24px;
+  }
+
+  .howitworksform-desc {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+
+  .howitworksform-form {
+    gap: 16px;
+  }
+
+  .howitworksform-input {
+    font-size: 16px;
+    height: 52px;
+    padding: 16px 12px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+
+  .howitworksform-submit {
+    font-size: 18px;
+    height: 52px;
+    padding: 16px 32px;
+  }
+}
+
+// Мобильные устройства
+@media (max-width: 768px) {
+  .howitworksform-block {
+    margin: 16px 12px 0 12px;
+    padding: 20px 16px 16px 16px;
+    border-radius: 20px 0.5px 20px 0.5px;
+  }
+
+  .howitworksform-phonebar {
+    left: -8px;
+    top: 24px;
+    font-size: 16px;
+    padding: 6px 10px 6px 16px;
+    min-width: 200px;
+    border-radius: 0px 20px 20px 0px;
+  }
+
   .howitworksform-content {
     margin-top: 48px;
   }
+
   .howitworksform-title {
-    font-size: 28px;
-    margin-bottom: 18px;
+    font-size: 24px;
+    margin-left: 0;
+    margin-bottom: 20px;
+    line-height: 1.2;
   }
+
+  .howitworksform-desc {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
   .howitworksform-form {
     flex-direction: column;
     gap: 12px;
   }
+
   .howitworksform-input {
-    max-width: 100%;
-    min-width: 0;
     width: 100%;
     height: 48px;
     font-size: 16px;
+    padding: 12px 16px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
   }
+
   .howitworksform-submit {
     width: 100%;
-    margin-left: 0;
     height: 48px;
     font-size: 16px;
+    padding: 12px 24px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .howitworksform-policy {
+    font-size: 13px;
+    gap: 8px;
+
+    input[type='checkbox'] {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// Очень маленькие экраны
+@media (max-width: 480px) {
+  .howitworksform-block {
+    margin: 12px 8px 0 8px;
+    padding: 16px 12px 12px 12px;
+    border-radius: 16px 0.5px 16px 0.5px;
+  }
+
+  .howitworksform-phonebar {
+    left: -4px;
+    top: 20px;
+    font-size: 14px;
+    padding: 4px 8px 4px 12px;
+    min-width: 160px;
+    border-radius: 0px 16px 16px 0px;
+  }
+
+  .howitworksform-content {
+    margin-top: 40px;
+  }
+
+  .howitworksform-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .howitworksform-desc {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .howitworksform-form {
+    gap: 10px;
+  }
+
+  .howitworksform-input {
+    height: 44px;
+    font-size: 14px;
+    padding: 10px 12px;
+
+    &::placeholder {
+      font-size: 14px;
+    }
+  }
+
+  .howitworksform-submit {
+    height: 44px;
+    font-size: 14px;
+    padding: 10px 20px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .howitworksform-policy {
+    font-size: 12px;
+
+    input[type='checkbox'] {
+      width: 16px;
+      height: 16px;
+    }
   }
 } 

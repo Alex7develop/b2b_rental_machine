@@ -2,27 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import './WhyUs.scss';
 
 const WhyUs: React.FC = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [animatedItems, setAnimatedItems] = useState<number[]>([]);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const stepsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
           setIsVisible(true);
-          // Запускаем анимацию блоков по очереди
-          const timer = setTimeout(() => {
-            for (let i = 0; i <= 4; i++) {
-              setTimeout(() => {
-                setAnimatedItems(prev => [...prev, i]);
-              }, i * 150);
-            }
-          }, 200);
-          
-          return () => clearTimeout(timer);
         }
       },
       {
@@ -48,17 +36,16 @@ const WhyUs: React.FC = () => {
         const rect = sectionRef.current.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         
-        // Начинаем складывать гармошку когда секция поднимается выше 70% экрана
-        // Разворачиваем когда секция опускается ниже 80% экрана
-        if (rect.bottom < viewportHeight * 0.7) {
-          setIsCollapsed(true);
-        } else if (rect.bottom > viewportHeight * 0.8) {
+        if (rect.top < viewportHeight * 0.8 && rect.bottom > viewportHeight * 0.2) {
           setIsCollapsed(false);
+        } else {
+          setIsCollapsed(true);
         }
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -100,13 +87,13 @@ const WhyUs: React.FC = () => {
           </div>
           
           <div className="why-us__steps-wrapper">
-            <div className={`why-us__steps ${isCollapsed ? 'why-us__steps--collapsed' : ''}`} ref={stepsRef}>
+            <div className={`why-us__steps ${isCollapsed ? 'why-us__steps--collapsed' : ''}`}>
               {steps.map((step, index) => (
                 <div 
                   key={index}
-                  className={`why-us__step ${animatedItems.includes(index) ? 'why-us__step--animated' : ''} ${isCollapsed ? 'why-us__step--collapsed' : ''}`}
+                  className={`why-us__step ${!isCollapsed ? 'why-us__step--expanded' : ''}`}
                   style={{ 
-                    transitionDelay: isCollapsed ? `${(steps.length - index - 1) * 0.1}s` : `${index * 0.1}s`
+                    transitionDelay: `${index * 0.1}s`
                   }}
                 >
                   <div className="why-us__step-number">{step.number}</div>
@@ -117,9 +104,9 @@ const WhyUs: React.FC = () => {
                 </div>
               ))}
               
-              <div className={`why-us__cta ${animatedItems.includes(4) ? 'why-us__cta--animated' : ''} ${isCollapsed ? 'why-us__cta--collapsed' : ''}`}
+              <div className={`why-us__cta ${!isCollapsed ? 'why-us__cta--expanded' : ''}`}
                    style={{ 
-                     transitionDelay: isCollapsed ? '0s' : '0.4s'
+                     transitionDelay: '0.4s'
                    }}>
                 <div className="why-us__cta-number">05</div>
                 <div className="why-us__cta-content">
@@ -139,25 +126,23 @@ const WhyUs: React.FC = () => {
               </div>
             </div>
 
-            {/* Компактный вид гармошки */}
             <div className={`why-us__accordion ${isCollapsed ? 'why-us__accordion--visible' : ''}`}>
               {steps.map((step, index) => (
                 <div 
                   key={`accordion-${index}`}
                   className="why-us__accordion-item"
                   style={{ 
-                    transitionDelay: isCollapsed ? `${index * 0.1}s` : `${(steps.length - index - 1) * 0.1}s`
+                    transitionDelay: `${index * 0.05}s`
                   }}
                 >
                   <div className="why-us__accordion-number">{step.number}</div>
                   <div className="why-us__accordion-title">{step.title}</div>
-                  <div className="why-us__accordion-description">{step.description}</div>
                 </div>
               ))}
               
               <div className="why-us__accordion-cta"
                    style={{ 
-                     transitionDelay: isCollapsed ? '0.4s' : '0s'
+                     transitionDelay: '0.2s'
                    }}>
                 <div className="why-us__accordion-number">05</div>
                 <div className="why-us__accordion-content">
