@@ -53,6 +53,7 @@
       padding: 4px 0;
       border-bottom: 2px solid transparent;
       transition: border 0.2s, color 0.2s;
+      white-space: nowrap;
       &--active {
         color: #273889;
         border-bottom: 2px solid #273889;
@@ -75,31 +76,240 @@
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
     flex: 0 0 auto;
+    white-space: nowrap;
     &:hover {
       background: #273889;
       color: #fff;
     }
   }
+
+  // Бургер кнопка
+  &__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    
+    span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background: #273889;
+      border-radius: 1px;
+      transition: all 0.3s ease;
+    }
+    
+    &--active {
+      span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+    }
+  }
+
+  // Мобильное меню
+  &__mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 50;
+    margin: 0 32px;
+    
+    &--open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 32px 16px;
+  }
+
+  &__mobile-link {
+    color: #273889;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: color 0.2s;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &--active {
+      color: #273889;
+      font-weight: 600;
+    }
+    
+    &:hover {
+      color: #4051a0;
+    }
+  }
+
+  &__mobile-cta {
+    background: #273889;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 24px;
+    margin: 16px 32px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+    
+    &:hover {
+      background: #4051a0;
+    }
+  }
 }
 
-@media (max-width: 900px) {
-  .header__container {
-    padding: 0 16px;
+// Планшеты
+@media (max-width: 1024px) {
+  .header {
+    padding: 12px 0 0 0;
+    
+    &__container {
+      padding: 0 24px;
+    }
+    
+    &__content {
+      padding: 12px 24px;
+    }
+    
+    &__nav {
+      gap: 24px;
+      
+      &-link {
+        font-size: 16px;
+      }
+    }
+    
+    &__cta {
+      font-size: 16px;
+      padding: 8px 20px;
+    }
   }
-  
-  .header__content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    border-radius: 16px;
+}
+
+// Мобильные устройства
+@media (max-width: 768px) {
+  .header {
+    padding: 8px 0 0 0;
+    
+    &__container {
+      padding: 0 16px;
+    }
+    
+    &__content {
+      padding: 12px 16px;
+      border-radius: 16px;
+    }
+    
+    &__logo-icon {
+      height: 28px;
+    }
+    
+    &__logo-text {
+      height: 16px;
+    }
+    
+    // Скрываем десктопную навигацию и кнопку
+    &__nav--desktop,
+    &__cta--desktop {
+      display: none;
+    }
+    
+    // Показываем бургер
+    &__burger {
+      display: flex;
+    }
+    
+    &__mobile-menu {
+      margin: 0 16px;
+      border-radius: 0 0 16px 16px;
+    }
+    
+    &__mobile-nav {
+      padding: 16px 20px 12px;
+    }
+    
+    &__mobile-link {
+      font-size: 15px;
+      padding: 10px 0;
+    }
+    
+    &__mobile-cta {
+      font-size: 15px;
+      margin: 12px 20px 20px;
+    }
   }
-  
-  .header__nav {
-    justify-content: flex-start;
-    gap: 18px;
-  }
-  
-  .header__cta {
-    width: 100%;
+}
+
+// Очень маленькие экраны
+@media (max-width: 480px) {
+  .header {
+    &__container {
+      padding: 0 12px;
+    }
+    
+    &__content {
+      padding: 10px 12px;
+    }
+    
+    &__logo-icon {
+      height: 24px;
+    }
+    
+    &__logo-text {
+      height: 14px;
+    }
+    
+    &__burger {
+      width: 20px;
+      height: 16px;
+    }
+    
+    &__mobile-menu {
+      margin: 0 12px;
+    }
+    
+    &__mobile-nav {
+      padding: 12px 16px 8px;
+    }
+    
+    &__mobile-link {
+      font-size: 14px;
+      padding: 8px 0;
+    }
+    
+    &__mobile-cta {
+      font-size: 14px;
+      margin: 8px 16px 16px;
+      padding: 10px 20px;
+    }
   }
 } 
