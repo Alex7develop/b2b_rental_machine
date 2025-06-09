@@ -1,0 +1,174 @@
+.howitworksform-block {
+  position: relative;
+  margin: 64px auto 0 auto;
+  max-width: 1200px;
+  background: linear-gradient(120deg, rgba(39,56,137,0.95) 60%, rgba(64,81,160,0.95) 100%), url('/img/wave.jpg') center/cover no-repeat, #273889;
+  border-radius: 40px;
+  box-shadow: 0 12px 48px rgba(39,56,137,0.13);
+  padding: 72px 64px 56px 64px;
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.howitworksform-phonebar {
+  position: absolute;
+  top: 40px;
+  left: -28px;
+  z-index: 2;
+  background: #fff;
+  color: #273889;
+  font-size: 26px;
+  font-weight: 800;
+  border-radius: 0px 30px 30px 0px;
+  padding: 10px 56px 10px 56px;
+  box-shadow: 0 4px 24px rgba(39,56,137,0.10);
+  letter-spacing: 0.01em;
+  display: inline-block;
+  border: none;
+  min-width: 340px;
+  text-align: center;
+}
+
+.howitworksform-content {
+  width: 100%;
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.howitworksform-title {
+  font-size: 48px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  text-align: left;
+  margin-bottom: 32px;
+  letter-spacing: -0.01em;
+  word-break: break-word;
+  max-width: 100%;
+  margin-left: 0;
+}
+
+.howitworksform-desc {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.howitworksform-form {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.howitworksform-input {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  padding: 20px 8px;
+  border-radius: 10px 1px 10px 1px;
+  border: 2px solid rgba(255,255,255,0.5);
+  background: rgba(17,24,39,0.18);
+  font-size: 18px;
+  outline: none;
+  color: #fff;
+  font-weight: 500;
+  transition: border 0.2s, background 0.2s;
+  height: 56px;
+  margin-bottom: 0;
+}
+.howitworksform-input::placeholder {
+  color: #fff;
+  opacity: 0.8;
+  font-size: 18px;
+}
+.howitworksform-submit {
+  background: #fff;
+  color: #273889;
+  font-size: 20px;
+  font-weight: 800;
+  border: none;
+  border-radius: 7px;
+  padding: 20px 40px 20px 40px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  box-shadow: 0 2px 12px rgba(39,56,137,0.08);
+  margin-left: 0;
+  justify-content: center;
+  &:hover {
+    background: #4051a0;
+    color: #fff;
+  }
+}
+.howitworksform-submit svg {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.howitworksform-policy {
+  font-size: 15px;
+  color: #fff;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  input[type='checkbox'] {
+    margin-top: 0;
+    accent-color: #fff;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .howitworksform-block {
+    padding: 32px 8px 24px 8px;
+  }
+  .howitworksform-phonebar {
+    left: 16px;
+    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 22px 0 0 22px;
+    min-width: 220px;
+    top: 16px;
+  }
+  .howitworksform-content {
+    margin-top: 48px;
+  }
+  .howitworksform-title {
+    font-size: 28px;
+    margin-bottom: 18px;
+  }
+  .howitworksform-form {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .howitworksform-input {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+  }
+  .howitworksform-submit {
+    width: 100%;
+    margin-left: 0;
+    height: 48px;
+    font-size: 16px;
+  }
+} 

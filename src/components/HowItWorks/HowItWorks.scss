@@ -1,0 +1,106 @@
+@use '../../styles/variables.scss' as *;
+
+.howitworks {
+  background: #f3f7fa;
+  padding: 64px 0 0 0;
+
+  &__title {
+    text-align: center;
+    font-size: 44px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 48px;
+    letter-spacing: -0.01em;
+  }
+
+  &__steps {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: stretch;
+    margin-bottom: 0;
+  }
+  &__step {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 32px rgba(39,56,137,0.08);
+    padding: 36px 32px 32px 32px;
+    min-width: 320px;
+    max-width: 370px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  &__step-number {
+    background: #f3f4f6;
+    color: #273889;
+    font-size: 22px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 6px 18px;
+    margin-bottom: 18px;
+    letter-spacing: 0.04em;
+    display: inline-block;
+  }
+  &__step-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  &__step-desc {
+    font-size: 16px;
+    color: #6b7280;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 1100px) {
+  .howitworks__steps {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .howitworks__step {
+    min-width: 0;
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 700px) {
+  .howitworks {
+    padding: 32px 0 0 0;
+  }
+  .howitworks__title {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+  .howitworks__steps {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  .howitworks__step {
+    padding: 18px 10px 18px 10px;
+    border-radius: 10px;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .howitworks__step-number {
+    font-size: 15px;
+    padding: 4px 12px;
+    margin-bottom: 10px;
+  }
+  .howitworks__step-title {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .howitworks__step-desc {
+    font-size: 12px;
+  }
+} 
