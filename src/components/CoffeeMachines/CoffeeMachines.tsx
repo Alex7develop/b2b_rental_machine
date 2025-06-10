@@ -9,6 +9,11 @@ interface CoffeeMachine {
   cups: string;
   groups: string;
   image: string;
+  height: string;
+  boilerVolume: string;
+  control: string;
+  dimensions: string;
+  cupsPerDay?: number;
 }
 
 const CoffeeMachines: React.FC = () => {
@@ -53,7 +58,11 @@ const CoffeeMachines: React.FC = () => {
       description: 'Однокотловая эспрессо-машина, доступная в вариантах 1, 2, 3 группы или 2 группы компактно (2GRC). Все версии оснащены автоматическим дозированием (USB). Технология Steady Brew (SB) доступна для...',
       cups: '120 чашек',
       groups: '1GR',
-      image: '/img/classic_macmine/Rancilio_Classe_5_USB.png'
+      image: '/img/classic_macmine/Rancilio_Classe_5_USB.png',
+      height: 'Низкая',
+      boilerVolume: '4 литра',
+      control: 'Автомат',
+      dimensions: '410 / 540 / 52 мм / 35 кг.'
     },
     {
       id: '2',
@@ -61,7 +70,11 @@ const CoffeeMachines: React.FC = () => {
       description: 'Однокотловая эспрессо-машина, доступная в вариантах 1, 2, 3 группы или 2 группы компактно (2GRC). Все версии оснащены автоматическим дозированием (USB). Технология Steady Brew (SB) доступна для...',
       cups: '120 чашек',
       groups: '2GR',
-      image: '/img/classic_macmine/Rancilio_Classe_5_USB_Tall.png'
+      image: '/img/classic_macmine/Rancilio_Classe_5_USB_Tall.png',
+      height: 'Высокая',
+      boilerVolume: '6 литров',
+      control: 'Автомат',
+      dimensions: '410 / 640 / 52 мм / 38 кг.'
     },
     {
       id: '3',
@@ -69,7 +82,11 @@ const CoffeeMachines: React.FC = () => {
       description: 'Однокотловая эспрессо-кофемашина доступна в версиях с 1, 2, 3 группами, 1 группе с резервуаром (1GRT), 2 группы компактные (2GRC). Все версии оснащены полуавтоматическим дозированием (S). Технология Steady Brew (SB) доступна для...',
       cups: '120 чашек',
       groups: '2GR',
-      image: '/img/classic_macmine/Rancilio_Classe_5_S.png'
+      image: '/img/classic_macmine/Rancilio_Classe_5_S.png',
+      height: 'Средняя',
+      boilerVolume: '5 литров',
+      control: 'Полуавтомат',
+      dimensions: '410 / 590 / 52 мм / 36 кг.'
     },
     {
       id: '4',
@@ -77,7 +94,11 @@ const CoffeeMachines: React.FC = () => {
       description: 'Высокая версия машины с увеличенным клиренсом для больших чашек. Обеспечивает стабильное качество напитков в течение всего дня.',
       cups: '150 чашек',
       groups: '1GR',
-      image: '/img/classic_macmine/Rancilio_Classe_5_S_Tall.png'
+      image: '/img/classic_macmine/Rancilio_Classe_5_S_Tall.png',
+      height: 'Высокая',
+      boilerVolume: '4 литра',
+      control: 'Полуавтомат',
+      dimensions: '410 / 640 / 52 мм / 37 кг.'
     }
   ];
 
@@ -88,7 +109,12 @@ const CoffeeMachines: React.FC = () => {
       description: 'Премиальная суперавтоматическая машина с сенсорным дисплеем и возможностью приготовления различных напитков. Встроенная система очистки и обслуживания.',
       cups: '300 чашек',
       groups: 'AUTO',
-      image: '/img/automat_machine/WMF_1300_S.png'
+      image: '/img/automat_machine/WMF_1300_S.png',
+      height: 'Basic Milk',
+      boilerVolume: 'Бак 4л + водопровод',
+      control: '50',
+      dimensions: '325 / 574 / 670 мм',
+      cupsPerDay: 120
     },
     {
       id: '6',
@@ -96,7 +122,12 @@ const CoffeeMachines: React.FC = () => {
       description: 'Профессиональная автоматическая машина с двумя кофемолками и системой Fresh Brew. Идеальна для офисов и ресторанов с высокой проходимостью.',
       cups: '400 чашек',
       groups: 'AUTO',
-      image: '/img/automat_machine/WMF_1100_S.png'
+      image: '/img/automat_machine/WMF_1100_S.png',
+      height: 'Basic Milk / Basic Steam',
+      boilerVolume: 'бак 4,5 л + водопровод',
+      control: '24',
+      dimensions: '325 / 561 / 500 мм',
+      cupsPerDay: 80
     },
     {
       id: '7',
@@ -104,7 +135,12 @@ const CoffeeMachines: React.FC = () => {
       description: 'Компактная автоматическая машина с интуитивным управлением и системой самоочистки. Быстрое приготовление качественных напитков одним нажатием.',
       cups: '250 чашек',
       groups: 'AUTO',
-      image: '/img/automat_machine/WMF_950_S.png'
+      image: '/img/automat_machine/WMF_950_S.png',
+      height: 'Есть',
+      boilerVolume: 'Прямое водоснабжение',
+      control: '21',
+      dimensions: '303 / 562 / 528 мм',
+      cupsPerDay: 50
     },
     {
       id: '8',
@@ -112,7 +148,12 @@ const CoffeeMachines: React.FC = () => {
       description: 'Инновационная машина с современным дизайном и автоматической калибровкой. Обеспечивает постоянное качество напитков.',
       cups: '350 чашек',
       groups: 'AUTO',
-      image: '/img/automat_machine/k96L_black.png'
+      image: '/img/automat_machine/k96L_black.png',
+      height: 'Есть',
+      boilerVolume: 'Бак 6л + водопровод',
+      control: '20',
+      dimensions: '580 / 530 / 700 мм',
+      cupsPerDay: 120
     }
   ];
 
@@ -161,12 +202,19 @@ const CoffeeMachines: React.FC = () => {
                   style={{ animationDelay: `${0.8 + index * 0.1}s` }}
                 >
                   <div className="coffee-machines__card">
-                    <div className="coffee-machines__card-badge">
-                      {machine.groups}
-                    </div>
-                    
-                    <div className="coffee-machines__card-image">
-                      <img src={machine.image} alt={machine.name} />
+                    <div className="coffee-machines__card-image-container">
+                      <div className="coffee-machines__card-badge">
+                        {machine.groups === '1GR' && <img src="/1gr.png" alt="1GR" />}
+                        {machine.groups === '2GR' && <img src="/2gr.png" alt="2GR" />}
+                        {machine.groups === 'AUTO' && machine.cupsPerDay && (
+                          <img src={`/${machine.cupsPerDay}cup.png`} alt={`до ${machine.cupsPerDay} чашек`} />
+                        )}
+                        {machine.groups === 'AUTO' && !machine.cupsPerDay && <span>AUTO</span>}
+                      </div>
+                      
+                      <div className="coffee-machines__card-image">
+                        <img src={machine.image} alt={machine.name} />
+                      </div>
                     </div>
                     
                     <div className="coffee-machines__card-content">
@@ -174,22 +222,52 @@ const CoffeeMachines: React.FC = () => {
                         {machine.name}
                       </h3>
                       
-                      <p className="coffee-machines__card-description">
-                        {machine.description}
-                      </p>
-                      
-                      <div className="coffee-machines__card-footer">
-                        <div className="coffee-machines__card-cups">
-                          {machine.cups}
-                        </div>
-                        
-                        <button className="coffee-machines__card-button">
-                          Характеристики
-                          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        </button>
+                      <div className="coffee-machines__card-specs">
+                        {activeTab === 'classic' ? (
+                          <>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Высота групп:</span>
+                              <span className="coffee-machines__card-spec-value">{machine.height}</span>
+                            </div>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Объем бойлера:</span>
+                              <span className="coffee-machines__card-spec-value">{machine.boilerVolume}</span>
+                            </div>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Управление:</span>
+                              <span className="coffee-machines__card-spec-value">{machine.control}</span>
+                            </div>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Габариты (ш.г.в.):</span>
+                              <span className="coffee-machines__card-spec-value">{machine.dimensions}</span>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Автокапучинатор:</span>
+                              <span className="coffee-machines__card-spec-value">{machine.height}</span>
+                            </div>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Тип подключения:</span>
+                              <span className="coffee-machines__card-spec-value">{machine.boilerVolume}</span>
+                            </div>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Кол-во рецептов:</span>
+                              <span className="coffee-machines__card-spec-value">{machine.control}</span>
+                            </div>
+                            <div className="coffee-machines__card-spec">
+                              <span className="coffee-machines__card-spec-label">Габариты (ш.г.в.):</span>
+                              <span className="coffee-machines__card-spec-value">{machine.dimensions}</span>
+                            </div>
+                          </>
+                        )}
                       </div>
+                      
+                      <button className="coffee-machines__card-button">
+                        Заказать
+                        <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
+                      </button>
                     </div>
                   </div>
                 </div>

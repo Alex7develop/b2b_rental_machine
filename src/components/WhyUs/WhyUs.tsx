@@ -3,32 +3,7 @@ import './WhyUs.scss';
 
 const WhyUs: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: [0.1, 0.3, 0.5],
-        rootMargin: '0px 0px -100px 0px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
