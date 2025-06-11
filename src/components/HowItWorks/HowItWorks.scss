@@ -3,6 +3,30 @@
 .howitworks {
   background: #f3f7fa;
   padding: 64px 0 0 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+
+    .howitworks__title {
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+    }
+
+    .howitworks__step--1 {
+      animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+    }
+
+    .howitworks__step--2 {
+      animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+    }
+
+    .howitworks__step--3 {
+      animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+    }
+  }
 
   &__title {
     text-align: center;
@@ -11,6 +35,8 @@
     color: #111827;
     margin-bottom: 48px;
     letter-spacing: -0.01em;
+    opacity: 0;
+    transform: translateY(30px);
   }
 
   &__steps {
@@ -20,6 +46,7 @@
     align-items: stretch;
     margin-bottom: 0;
   }
+
   &__step {
     background: #fff;
     border-radius: 20px;
@@ -31,7 +58,22 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 18px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 40px rgba(39,56,137,0.12);
+
+      .howitworks__step-number {
+        background: #273889;
+        color: #fff;
+        transform: scale(1.05);
+      }
+    }
   }
+
   &__step-number {
     background: #f3f4f6;
     color: #273889;
@@ -42,19 +84,32 @@
     margin-bottom: 18px;
     letter-spacing: 0.04em;
     display: inline-block;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
   &__step-title {
     font-size: 22px;
     font-weight: 700;
     color: #111827;
     margin-bottom: 8px;
     line-height: 1.2;
+    transition: all 0.3s ease;
   }
+
   &__step-desc {
     font-size: 16px;
     color: #6b7280;
     font-weight: 400;
     line-height: 1.5;
+    transition: all 0.3s ease;
+  }
+
+  &__step:hover &__step-title {
+    color: #273889;
+  }
+
+  &__step:hover &__step-desc {
+    color: #4b5563;
   }
 }
 
@@ -102,5 +157,28 @@
   }
   .howitworks__step-desc {
     font-size: 12px;
+  }
+}
+
+// Keyframes для анимаций
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 } 

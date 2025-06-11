@@ -11,6 +11,46 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+
+    .howitworksform-phonebar {
+      animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+    }
+
+    .howitworksform-title {
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+    }
+
+    .howitworksform-desc {
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+    }
+
+    .howitworksform-input--1 {
+      animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+    }
+
+    .howitworksform-input--2 {
+      animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+    }
+
+    .howitworksform-input--3 {
+      animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+    }
+
+    .howitworksform-submit {
+      animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
+    }
+
+    .howitworksform-policy {
+      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+    }
+  }
 }
 
 .howitworksform-phonebar {
@@ -30,6 +70,14 @@
   border: none;
   min-width: 340px;
   text-align: center;
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateX(0) scale(1.02);
+    box-shadow: 0 6px 32px rgba(39,56,137,0.15);
+  }
 }
 
 .howitworksform-content {
@@ -51,6 +99,8 @@
   word-break: break-word;
   max-width: 100%;
   margin-left: 540px;
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 .howitworksform-desc {
@@ -58,6 +108,8 @@
   color: #fff;
   margin-bottom: 32px;
   font-weight: 400;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .howitworksform-form {
@@ -79,9 +131,11 @@
   outline: none;
   color: #fff;
   font-weight: 500;
-  transition: border 0.2s, background 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 56px;
   margin-bottom: 0;
+  opacity: 0;
+  transform: translateY(30px);
 
   &::placeholder {
     color: #fff;
@@ -92,6 +146,13 @@
   &:focus {
     border-color: rgba(255,255,255,0.8);
     background: rgba(17,24,39,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  &:hover {
+    border-color: rgba(255,255,255,0.7);
+    transform: translateY(-1px);
   }
 }
 
@@ -104,7 +165,7 @@
   border-radius: 7px;
   padding: 20px 40px 20px 40px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -113,10 +174,14 @@
   box-shadow: 0 2px 12px rgba(39,56,137,0.08);
   margin-left: 0;
   justify-content: center;
+  opacity: 0;
+  transform: scale(0.9);
 
   &:hover {
     background: #4051a0;
     color: #fff;
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 8px 32px rgba(39,56,137,0.2);
   }
 
   svg {
@@ -124,6 +189,11 @@
     height: 22px;
     display: inline-block;
     vertical-align: middle;
+    transition: all 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(4px);
   }
 }
 
@@ -134,10 +204,18 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  opacity: 0;
+  transform: translateY(20px);
 
   a {
     color: #fff;
     text-decoration: underline;
+    transition: all 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
   }
 
   input[type='checkbox'] {
@@ -146,6 +224,11 @@
     width: 22px;
     height: 22px;
     flex-shrink: 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   label {
@@ -341,5 +424,50 @@
       width: 16px;
       height: 16px;
     }
+  }
+}
+
+// Keyframes для анимаций
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 } 

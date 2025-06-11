@@ -3,6 +3,46 @@
 .hero {
   background: #f3f7fa;
   padding: 32px 0 0 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+
+    .hero__video-block {
+      animation: scaleIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+    }
+
+    .hero__title-line {
+      animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+
+      &:nth-child(2) {
+        animation-delay: 0.6s;
+      }
+    }
+
+    .hero__subtitle {
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+    }
+
+    .hero__actions {
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+    }
+
+    .hero__card--1 {
+      animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+    }
+
+    .hero__card--2 {
+      animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+    }
+
+    .hero__card--3 {
+      animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+    }
+  }
 
   &__container {
     display: flex;
@@ -38,6 +78,8 @@
     background: #000;
     display: flex;
     align-items: stretch;
+    opacity: 0;
+    transform: scale(0.95);
   }
 
   &__video {
@@ -68,6 +110,12 @@
     text-shadow: 0 4px 24px rgba(0,0,0,0.25);
   }
 
+  &__title-line {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
   &__title-bold {
     font-weight: 900;
     font-size: 64px;
@@ -83,12 +131,16 @@
     max-width: 520px;
     font-weight: 400;
     text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    opacity: 0;
+    transform: translateY(20px);
   }
 
   &__actions {
     display: flex;
     align-items: center;
     gap: 32px;
+    opacity: 0;
+    transform: translateY(20px);
   }
 
   &__button {
@@ -100,9 +152,13 @@
     font-weight: 700;
     padding: 18px 38px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
+    
     &:hover {
       background: #4051a0;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(39, 56, 137, 0.3);
     }
   }
 
@@ -112,6 +168,11 @@
     font-weight: 600;
     letter-spacing: 0.01em;
     text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   &__right {
@@ -138,51 +199,72 @@
     min-height: 170px;
     font-size: 26px;
     font-weight: 700;
-  }
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &__card--top {
-    border-top-right-radius: 24px;
-  }
+    &:hover {
+      transform: translateX(0) translateY(-4px);
+      box-shadow: 0 8px 40px rgba(39,56,137,0.15);
+    }
 
-  &__card--bottom {
-    border-bottom-right-radius: 24px;
-  }
+    &--top {
+      border-top-right-radius: 24px;
+    }
 
-  &__card--blue {
-    background: #273889;
-    color: #fff;
-    flex: 0;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    border-radius: 24px;
-    padding: 36px 32px 36px 32px;
-    min-height: 170px;
-    position: relative;
-    .hero__card-title {
+    &--bottom {
+      border-bottom-right-radius: 24px;
+    }
+
+    &--blue {
+      background: #273889;
       color: #fff;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-top: 0;
-      margin-left: 0;
-    }
-    .hero__iconblock--topright {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      width: 36px;
-      height: 36px;
-      background: #f3f4f6;
-      border-radius: 10px;
+      flex: 0;
+      flex-shrink: 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .hero__icon {
-      width: 26px;
-      height: 26px;
+      flex-direction: row;
+      justify-content: flex-start;
+      border-radius: 24px;
+      padding: 36px 32px 36px 32px;
+      min-height: 170px;
+      position: relative;
+      
+      &:hover {
+        background: #4051a0;
+        transform: translateX(0) translateY(-4px) scale(1.02);
+      }
+      
+      .hero__card-title {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-top: 0;
+        margin-left: 0;
+      }
+      
+      .hero__iconblock--topright {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        width: 36px;
+        height: 36px;
+        background: #f3f4f6;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+      
+      &:hover .hero__iconblock--topright {
+        transform: rotate(45deg) scale(1.1);
+      }
+      
+      .hero__icon {
+        width: 26px;
+        height: 26px;
+      }
     }
   }
 
@@ -191,16 +273,33 @@
     height: 40px;
     flex-shrink: 0;
     margin-top: 0;
+    transition: all 0.3s ease;
+    
     &--topright {
       margin: 0;
     }
   }
 
+  &__iconblock {
+    transition: all 0.3s ease;
+  }
+
+  &__card:hover &__iconblock {
+    transform: scale(1.1) rotate(5deg);
+  }
+
   &__card-title {
     font-size: 24px;
     font-weight: 700;
-    color: #273889;
     line-height: 1.2;
+    color: #1e293b;
+    margin: 0;
+    transition: all 0.3s ease;
+
+    &--dark {
+      color: #1e293b;
+    }
+
     &--white {
       color: #fff;
     }
@@ -370,5 +469,50 @@
   .hero__icon {
     width: 22px;
     height: 22px;
+  }
+}
+
+// Keyframes для анимаций
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 } 
