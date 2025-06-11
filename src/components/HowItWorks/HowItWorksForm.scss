@@ -193,10 +193,11 @@
   }
 
   &:disabled {
-    background: #9ca3af;
+    background: white;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+    color: #273889;
 
     svg path {
       stroke: #6b7280;

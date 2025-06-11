@@ -36,12 +36,59 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
     return () => observer.disconnect();
   }, []);
 
+  // Функция для форматирования телефона
+  const formatPhoneNumber = (value: string) => {
+    // Удаляем все символы кроме цифр
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Если номер начинается с 8, заменяем на 7
+    const normalizedNumber = phoneNumber.startsWith('8') ? '7' + phoneNumber.slice(1) : phoneNumber;
+    
+    // Если номер не начинается с 7, добавляем 7
+    const withCountryCode = normalizedNumber.startsWith('7') ? normalizedNumber : '7' + normalizedNumber;
+    
+    // Ограничиваем длину до 11 цифр (7 + 10 цифр номера)
+    const limitedNumber = withCountryCode.slice(0, 11);
+    
+    // Форматируем номер
+    if (limitedNumber.length >= 1) {
+      let formatted = '+7';
+      if (limitedNumber.length > 1) {
+        formatted += ' (' + limitedNumber.slice(1, 4);
+        if (limitedNumber.length >= 4) {
+          formatted += ')';
+          if (limitedNumber.length > 4) {
+            formatted += '-' + limitedNumber.slice(4, 7);
+            if (limitedNumber.length > 7) {
+              formatted += '-' + limitedNumber.slice(7, 9);
+              if (limitedNumber.length > 9) {
+                formatted += '-' + limitedNumber.slice(9, 11);
+              }
+            }
+          }
+        }
+      }
+      return formatted;
+    }
+    
+    return '+7 (';
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    
+    if (name === 'phone') {
+      const formattedPhone = formatPhoneNumber(value);
+      setFormData(prev => ({
+        ...prev,
+        [name]: formattedPhone
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -85,7 +132,7 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
           <input 
             type="tel" 
             name="phone"
-            placeholder="Введите ваш телефон" 
+            placeholder="+7 (___)-___-__-__" 
             className="howitworksform-input howitworksform-input--2"
             value={formData.phone}
             onChange={handleInputChange}

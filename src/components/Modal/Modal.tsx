@@ -20,17 +20,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      setTimeout(() => setIsVisible(true), 50);
+      setTimeout(() => setIsVisible(true), 10);
     } else {
       document.body.style.overflow = 'unset';
       setIsVisible(false);
-      // Очистка формы при закрытии модального окна
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        consent: false
-      });
     }
 
     return () => {
@@ -38,12 +31,73 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose]);
+
+  // Функция для форматирования телефона
+  const formatPhoneNumber = (value: string) => {
+    // Удаляем все символы кроме цифр
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Если номер начинается с 8, заменяем на 7
+    const normalizedNumber = phoneNumber.startsWith('8') ? '7' + phoneNumber.slice(1) : phoneNumber;
+    
+    // Если номер не начинается с 7, добавляем 7
+    const withCountryCode = normalizedNumber.startsWith('7') ? normalizedNumber : '7' + normalizedNumber;
+    
+    // Ограничиваем длину до 11 цифр (7 + 10 цифр номера)
+    const limitedNumber = withCountryCode.slice(0, 11);
+    
+    // Форматируем номер
+    if (limitedNumber.length >= 1) {
+      let formatted = '+7';
+      if (limitedNumber.length > 1) {
+        formatted += ' (' + limitedNumber.slice(1, 4);
+        if (limitedNumber.length >= 4) {
+          formatted += ')';
+          if (limitedNumber.length > 4) {
+            formatted += '-' + limitedNumber.slice(4, 7);
+            if (limitedNumber.length > 7) {
+              formatted += '-' + limitedNumber.slice(7, 9);
+              if (limitedNumber.length > 9) {
+                formatted += '-' + limitedNumber.slice(9, 11);
+              }
+            }
+          }
+        }
+      }
+      return formatted;
+    }
+    
+    return '+7 (';
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    
+    if (name === 'phone') {
+      const formattedPhone = formatPhoneNumber(value);
+      setFormData(prev => ({
+        ...prev,
+        [name]: formattedPhone
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -182,7 +236,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="Ваш телефон"
+                    placeholder="+7 (___)-___-__-__"
                     className="modal__input"
                     value={formData.phone}
                     onChange={handleInputChange}
