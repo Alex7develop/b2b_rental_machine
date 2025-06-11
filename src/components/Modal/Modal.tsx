@@ -4,9 +4,10 @@ import './Modal.scss';
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -23,6 +24,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     } else {
       document.body.style.overflow = 'unset';
       setIsVisible(false);
+      // Очистка формы при закрытии модального окна
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        consent: false
+      });
     }
 
     return () => {
@@ -43,8 +51,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     if (!formData.consent) return;
     
     console.log('Form submitted:', formData);
-    // Здесь будет отправка данных на сервер
-    onClose();
+    
+    // Сброс формы
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      consent: false
+    });
+    
+    // Открытие модального окна успеха
+    onSuccess();
   };
 
   const handleBackdropClick = (e: React.MouseEvent) => {

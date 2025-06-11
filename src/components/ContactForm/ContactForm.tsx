@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import './ContactForm.scss';
 
-const ContactForm: React.FC = () => {
+interface ContactFormProps {
+  onOpenSuccessModal: () => void;
+}
+
+const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     agreed: false
+  });
+
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    agreed: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,11 +24,61 @@ const ContactForm: React.FC = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+
+    // Очищаем ошибку при изменении поля
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      name: '',
+      email: '',
+      agreed: ''
+    };
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Введите ваше имя';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Введите вашу почту';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Введите корректный email';
+    }
+
+    if (!formData.agreed) {
+      newErrors.agreed = 'Необходимо согласие на обработку данных';
+    }
+
+    setErrors(newErrors);
+    return !newErrors.name && !newErrors.email && !newErrors.agreed;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    
+    if (validateForm()) {
+      console.log('Form submitted:', formData);
+      // Сброс формы
+      setFormData({
+        name: '',
+        email: '',
+        agreed: false
+      });
+      // Сброс ошибок
+      setErrors({
+        name: '',
+        email: '',
+        agreed: ''
+      });
+      // Открытие модального окна успеха
+      onOpenSuccessModal();
+    }
   };
 
   return (
@@ -55,8 +115,10 @@ const ContactForm: React.FC = () => {
                   placeholder="Введите ваше имя"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="contact-form__input"
+                  className={`contact-form__input ${errors.name ? 'contact-form__input--error' : ''}`}
+                  required
                 />
+                {errors.name && <span className="contact-form__error">{errors.name}</span>}
               </div>
 
               <div className="contact-form__field">
@@ -66,11 +128,13 @@ const ContactForm: React.FC = () => {
                   placeholder="Введите вашу почту"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="contact-form__input"
+                  className={`contact-form__input ${errors.email ? 'contact-form__input--error' : ''}`}
+                  required
                 />
                 <div className="contact-form__input-icon">
                   <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
                 </div>
+                {errors.email && <span className="contact-form__error">{errors.email}</span>}
               </div>
 
               <button type="submit" className="contact-form__submit">
@@ -86,14 +150,16 @@ const ContactForm: React.FC = () => {
                     checked={formData.agreed}
                     onChange={handleInputChange}
                     className="contact-form__checkbox-input"
+                    required
                   />
-                  <span className="contact-form__checkbox-text">
+                  <span className={`contact-form__checkbox-text ${errors.agreed ? 'contact-form__checkbox-text--error' : ''}`}>
                     Я согласен на обработку персональных данных. 
                     <a href="#" className="contact-form__privacy-link">
                       Политика конфиденциальности
                     </a>
                   </span>
                 </label>
+                {errors.agreed && <span className="contact-form__error">{errors.agreed}</span>}
               </div>
             </form>
           </div>

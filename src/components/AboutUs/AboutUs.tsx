@@ -34,7 +34,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ onOpenModal }) => {
   }, []);
 
   return (
-    <section className={`about-us ${isVisible ? 'about-us--visible' : ''}`} ref={sectionRef}>
+    <section id="coffee-types" className={`about-us ${isVisible ? 'about-us--visible' : ''}`} ref={sectionRef}>
       <div className="about-us__container">
         <h2 className="about-us__title">
           Мы поставляем не просто кофе.

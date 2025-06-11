@@ -18,9 +18,10 @@ interface CoffeeMachine {
 
 interface CoffeeMachinesProps {
   onOpenModal: () => void;
+  onOpenSuccessModal: () => void;
 }
 
-const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal }) => {
+const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSuccessModal }) => {
   const [activeTab, setActiveTab] = useState<'classic' | 'automatic'>('classic');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -186,7 +187,7 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal }) => {
   };
 
   return (
-    <section className={`coffee-machines ${isVisible ? 'coffee-machines--visible' : ''}`} ref={sectionRef}>
+    <section id="catalog" className={`coffee-machines ${isVisible ? 'coffee-machines--visible' : ''}`} ref={sectionRef}>
       <div className="coffee-machines__container">
         <div className="coffee-machines__header">
           <h2 className="coffee-machines__title">
@@ -317,7 +318,7 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal }) => {
         </div>
 
         <div className="coffee-machines__form">
-          <HowItWorksForm />
+          <HowItWorksForm onOpenSuccessModal={onOpenSuccessModal} />
         </div>
       </div>
     </section>

@@ -20,7 +20,11 @@ const steps = [
   }
 ];
 
-const HowItWorks: React.FC = () => {
+interface HowItWorksProps {
+  onOpenSuccessModal: () => void;
+}
+
+const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenSuccessModal }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +50,7 @@ const HowItWorks: React.FC = () => {
   }, []);
 
   return (
-    <section className={`howitworks ${isVisible ? 'howitworks--visible' : ''}`} ref={sectionRef}>
+    <section id="steps" className={`howitworks ${isVisible ? 'howitworks--visible' : ''}`} ref={sectionRef}>
       <div className="container">
         <h2 className="howitworks__title">Запускаем кофе в вашем бизнесе за 3 шага</h2>
         <div className="howitworks__steps">
@@ -60,7 +64,7 @@ const HowItWorks: React.FC = () => {
             </div>
           ))}
         </div>
-        <HowItWorksForm />
+        <HowItWorksForm onOpenSuccessModal={onOpenSuccessModal} />
       </div>
     </section>
   );

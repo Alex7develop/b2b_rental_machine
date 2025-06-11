@@ -115,6 +115,16 @@
       height: 47px;
       padding-right: 48px;
     }
+
+    &--error {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      
+      &:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+      }
+    }
   }
 
   &__input-icon {
@@ -183,6 +193,10 @@
     font-size: 14px;
     line-height: 19.6px;
     color: rgba(255, 255, 255, 0.9);
+
+    &--error {
+      color: #fecaca;
+    }
   }
 
   &__privacy-link {
@@ -274,6 +288,14 @@
     line-height: 16px;
     color: #64748b;
     margin: 0;
+  }
+
+  &__error {
+    display: block;
+    color: #fecaca;
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: 400;
   }
 }
 

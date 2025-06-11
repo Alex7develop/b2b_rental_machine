@@ -52,7 +52,7 @@ const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
   ];
 
   return (
-    <section className="why-us" ref={sectionRef}>
+    <section id="goal" className="why-us" ref={sectionRef}>
       <div className="why-us__container">
         <div className="why-us__header">
           <h2 className="why-us__title">
