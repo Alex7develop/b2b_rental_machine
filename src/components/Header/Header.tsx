@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './Header.scss';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onOpenModal: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -10,6 +14,11 @@ const Header: React.FC = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleModalOpen = () => {
+    onOpenModal();
+    closeMenu();
   };
 
   return (
@@ -31,7 +40,7 @@ const Header: React.FC = () => {
           </nav>
           
           {/* Десктопная кнопка */}
-          <button className="header__cta header__cta--desktop">Оставить заявку</button>
+          <button className="header__cta header__cta--desktop" onClick={onOpenModal}>Оставить заявку</button>
           
           {/* Бургер кнопка */}
           <button 
@@ -54,7 +63,7 @@ const Header: React.FC = () => {
             <a href="#catalog" className="header__mobile-link" onClick={closeMenu}>Каталог</a>
             <a href="#coffee-types" className="header__mobile-link" onClick={closeMenu}>Виды кофе</a>
           </nav>
-          <button className="header__mobile-cta" onClick={closeMenu}>Оставить заявку</button>
+          <button className="header__mobile-cta" onClick={handleModalOpen}>Оставить заявку</button>
         </div>
       </div>
     </header>

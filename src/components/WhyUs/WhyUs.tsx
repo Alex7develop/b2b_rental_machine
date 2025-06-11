@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './WhyUs.scss';
 
-const WhyUs: React.FC = () => {
+interface WhyUsProps {
+  onOpenModal: () => void;
+}
+
+const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -89,7 +93,7 @@ const WhyUs: React.FC = () => {
                     Оставьте заявку — подберём кофемашину и кофе под ваш кейс
                   </div>
                   <div className="why-us__cta-actions">
-                    <button className="why-us__cta-button">
+                    <button className="why-us__cta-button" onClick={onOpenModal}>
                       Получить консультацию
                       <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -125,7 +129,7 @@ const WhyUs: React.FC = () => {
                     Оставьте заявку — подберём кофемашину и кофе под ваш кейс
                   </div>
                   <div className="why-us__accordion-actions">
-                    <button className="why-us__accordion-button">
+                    <button className="why-us__accordion-button" onClick={onOpenModal}>
                       Получить консультацию
                       <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
                     </button>

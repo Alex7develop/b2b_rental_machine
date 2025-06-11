@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.scss';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onOpenModal: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -36,8 +40,11 @@ const Hero: React.FC = () => {
                 — это простой способ повысить уровень сервиса и сэкономить на оборудовании
               </div>
               <div className="hero__actions">
-                <button className="hero__button">Оставить заявку</button>
-                <span className="hero__phone">+7 (909) 945-76-04</span>
+                <button className="hero__button" onClick={onOpenModal}>Оставить заявку</button>
+                <div className="hero__contacts">
+                  <span className="hero__phone">+7 (909) 945-76-04</span>
+                  <span className="hero__email">coffee_rent@alephtrade.com</span>
+                </div>
               </div>
             </div>
           </div>

@@ -16,7 +16,11 @@ interface CoffeeMachine {
   cupsPerDay?: number;
 }
 
-const CoffeeMachines: React.FC = () => {
+interface CoffeeMachinesProps {
+  onOpenModal: () => void;
+}
+
+const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal }) => {
   const [activeTab, setActiveTab] = useState<'classic' | 'automatic'>('classic');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -283,7 +287,7 @@ const CoffeeMachines: React.FC = () => {
                         )}
                       </div>
                       
-                      <button className="coffee-machines__card-button">
+                      <button className="coffee-machines__card-button" onClick={onOpenModal}>
                         Заказать
                         <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
                       </button>

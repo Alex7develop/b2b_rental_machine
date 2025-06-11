@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './AboutUs.scss';
 
-const AboutUs: React.FC = () => {
+interface AboutUsProps {
+  onOpenModal: () => void;
+}
+
+const AboutUs: React.FC<AboutUsProps> = ({ onOpenModal }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -129,7 +133,7 @@ const AboutUs: React.FC = () => {
 
           {/* Блок дегустации */}
           <div className="about-us__tasting-block">
-            <button className="about-us__tasting-button">
+            <button className="about-us__tasting-button" onClick={onOpenModal}>
               Попробуйте бесплатно
             </button>
             <h3 className="about-us__tasting-title">
@@ -137,7 +141,7 @@ const AboutUs: React.FC = () => {
               на дегустацию<br />
               в шоурум
             </h3>
-            <button className="about-us__signup-button">
+            <button className="about-us__signup-button" onClick={onOpenModal}>
               Записаться на дегустацию
             </button>
           </div>

@@ -175,6 +175,28 @@
     }
   }
 
+  &__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  &__email {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0.9;
+    transition: all 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
   &__right {
     // flex: 1.1;
     display: flex;
@@ -400,6 +422,9 @@
     height: 22px;
   }
   .hero__card-title {
+    font-size: 13px;
+  }
+  .hero__email {
     font-size: 13px;
   }
 }
