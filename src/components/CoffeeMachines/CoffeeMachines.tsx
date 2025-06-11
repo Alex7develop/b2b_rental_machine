@@ -20,7 +20,19 @@ const CoffeeMachines: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'classic' | 'automatic'>('classic');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -158,7 +170,8 @@ const CoffeeMachines: React.FC = () => {
   ];
 
   const currentMachines = activeTab === 'classic' ? classicMachines : automaticMachines;
-  const maxSlide = Math.max(0, currentMachines.length - 3);
+  const visibleCards = isMobile ? 1 : 3;
+  const maxSlide = Math.max(0, currentMachines.length - visibleCards);
 
   const handleScrollbarClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -194,8 +207,14 @@ const CoffeeMachines: React.FC = () => {
 
         <div className="coffee-machines__slider">
           <div className="coffee-machines__slides">
-            <div className="coffee-machines__track">
-              {currentMachines.slice(currentSlide, currentSlide + 3).map((machine, index) => (
+            <div 
+              className="coffee-machines__track"
+              style={isMobile ? {
+                transform: `translateX(-${currentSlide * 100}vw)`,
+                width: `${currentMachines.length * 100}vw`
+              } : {}}
+            >
+              {(isMobile ? currentMachines : currentMachines.slice(currentSlide, currentSlide + visibleCards)).map((machine, index) => (
                 <div 
                   key={machine.id} 
                   className="coffee-machines__slide"
@@ -275,7 +294,7 @@ const CoffeeMachines: React.FC = () => {
             </div>
           </div>
           
-          {currentMachines.length > 3 && (
+          {currentMachines.length > visibleCards && (
             <div className="coffee-machines__scrollbar">
               <div 
                 className="coffee-machines__scrollbar-track"
@@ -284,8 +303,8 @@ const CoffeeMachines: React.FC = () => {
                 <div 
                   className="coffee-machines__scrollbar-thumb"
                   style={{ 
-                    width: `${(3 / currentMachines.length) * 100}%`,
-                    left: `${(currentSlide / (currentMachines.length - 3)) * (100 - (3 / currentMachines.length) * 100)}%`
+                    width: `${(visibleCards / currentMachines.length) * 100}%`,
+                    left: `${(currentSlide / (currentMachines.length - visibleCards)) * (100 - (visibleCards / currentMachines.length) * 100)}%`
                   }}
                 />
               </div>
