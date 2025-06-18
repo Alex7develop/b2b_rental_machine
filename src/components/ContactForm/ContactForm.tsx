@@ -81,6 +81,22 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
     }
   };
 
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:hello@yourcoffee.ru';
+  };
+
+  const handleAddressClick = () => {
+    window.open('https://yandex.ru/maps/213/moscow/?ll=37.542964%2C55.776237&mode=routes&rtext=~55.775936%2C37.542454&rtt=mt&ruri=~&z=18', '_blank');
+  };
+
+  const handlePhoneClick = () => {
+    window.location.href = 'tel:+79099457604';
+  };
+
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/79099457604', '_blank');
+  };
+
   return (
     <section className="contact-form">
       <div className="contact-form__container">
@@ -167,9 +183,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
 
         <div className="contact-form__contact-blocks">
           <div className="contact-form__contact-block">
-            <div className="contact-form__contact-icon">
-              <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="24" height="24" />
-            </div>
+            <button 
+              className="contact-form__contact-icon" 
+              onClick={handleEmailClick}
+              type="button"
+              aria-label="Написать на почту"
+            >
+              <img src="/arrow-sm-diagonally.svg" alt="Email" width="24" height="24" />
+            </button>
             <div className="contact-form__contact-content">
               <span className="contact-form__contact-text">hello@yourcoffee.ru</span>
               <span className="contact-form__contact-subtitle">написать на почту</span>
@@ -177,9 +198,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
           </div>
 
           <div className="contact-form__contact-block">
-            <div className="contact-form__contact-icon">
-              <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="24" height="24" />
-            </div>
+            <button 
+              className="contact-form__contact-icon" 
+              onClick={handleAddressClick}
+              type="button"
+              aria-label="Открыть адрес на карте"
+            >
+              <img src="/arrow-sm-diagonally.svg" alt="Адрес" width="24" height="24" />
+            </button>
             <div className="contact-form__contact-content">
               <span className="contact-form__contact-text">
                 Метро Беговая – 5 минут пешком
@@ -189,9 +215,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
           </div>
 
           <div className="contact-form__contact-block">
-            <div className="contact-form__contact-icon">
-              <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="24" height="24" />
-            </div>
+            <button 
+              className="contact-form__contact-icon" 
+              onClick={handlePhoneClick}
+              type="button"
+              aria-label="Позвонить"
+            >
+              <img src="/arrow-sm-diagonally.svg" alt="Телефон" width="24" height="24" />
+            </button>
             <div className="contact-form__contact-content">
               <span className="contact-form__contact-text">+7 (909) 945-76-04</span>
               <span className="contact-form__contact-subtitle">позвонить</span>
@@ -199,14 +230,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
           </div>
 
           <div className="contact-form__contact-block">
-            <div className="contact-form__contact-icon">
-              <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="24" height="24" />
-            </div>
+            <button 
+              className="contact-form__contact-icon" 
+              onClick={handleWhatsAppClick}
+              type="button"
+              aria-label="Написать в WhatsApp"
+            >
+              <img src="/arrow-sm-diagonally.svg" alt="WhatsApp" width="24" height="24" />
+            </button>
             <div className="contact-form__contact-content">
-              <span className="contact-form__contact-text">
-                Напишите в WhatsApp
-              </span>
-              <span className="contact-form__contact-subtitle">+7 (909) 945-76-04</span>
+              <span className="contact-form__contact-text">WhatsApp</span>
+              <span className="contact-form__contact-subtitle">написать в мессенджер</span>
             </div>
           </div>
         </div>

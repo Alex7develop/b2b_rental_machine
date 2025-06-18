@@ -520,3 +520,12 @@
     }
   }
 } 
+//Временное решение для мобильных устройств
+@media (max-width: 768px) {
+  .why-us__steps-wrapper { display: none !important; }
+  .why-us__accordion { display: block !important; }
+}
+@media (min-width: 769px) {
+  .why-us__steps-wrapper { display: block !important; }
+  .why-us__accordion { display: none !important; }
+}
