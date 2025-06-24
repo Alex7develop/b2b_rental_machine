@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Modal.scss';
 
 interface ModalProps {
@@ -12,8 +13,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
     name: '',
     phone: '',
     email: '',
-    consent: false
+    consent: false,
+    formType: 'Подбор кофемашины',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -100,22 +104,42 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.consent) return;
-    
-    console.log('Form submitted:', formData);
-    
-    // Сброс формы
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      consent: false
-    });
-    
-    // Открытие модального окна успеха
-    onSuccess();
+    setError(null);
+    if (!formData.consent) {
+      setError('Необходимо согласие на обработку данных');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const TYPE = '2'; // 1 - Дегустация, 2 - Подбор кофемашины
+      if (TYPE !== '2' && TYPE !== '1') {
+        setError('Заполнена несуществующая форма');
+        return;
+      }
+      const payload = {
+        NAME: formData.name,
+        PHONE: formData.phone,
+        EMAIL: formData.email,
+        CONSENT: formData.consent ? 1 : 0,
+        TYPE,
+        // SOURCE_ID: 'WEB',
+        // SOURCE_DESCRIPTION: 'АлефТрейд B2B',
+      };
+      const formDataObj = new URLSearchParams(payload as any);
+      const response = await axios.post('/process-data.php', formDataObj);
+      if (response.data && (response.data.status === 'success')) {
+        setFormData({ name: '', phone: '', email: '', consent: false, formType: 'Дегустация' });
+        onSuccess();
+      } else if (response.data && response.data.status === 'error') {
+        setError(response.data.text || 'Ошибка при отправке. Попробуйте позже.');
+      }
+    } catch (err) {
+      setError('Ошибка при отправке. Попробуйте позже.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -136,8 +160,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
           <div className="modal__left">
             <div className="modal__left-content">
               <div className="modal__logo">
-                <img src="/father_icon_white.svg" alt="Алеф Трейд" className="modal__logo-icon" />
-                <img src="/aleph_white.svg" alt="Алеф Трейд" className="modal__logo-text" />
+                <img src="/father_icon_white.svg" alt="Алеф Трейд" className="modal__logo-icon" loading="lazy" width="32" height="32" />
+                <img src="/aleph_white.svg" alt="Алеф Трейд" className="modal__logo-text" loading="lazy" width="80" height="20" />
               </div>
 
               <h2 className="modal__title">
@@ -153,7 +177,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
               <div className="modal__features">
                 <div className="modal__feature">
                   <div className="modal__feature-icon">
-                    <img src="/Icon_user.svg" alt="Индивидуальный подбор" />
+                    <img src="/Icon_user.svg" alt="Индивидуальный подбор" loading="lazy" width="24" height="24" />
                   </div>
                   <div className="modal__feature-content">
                     <h3 className="modal__feature-title">Индивидуальный подбор оборудования</h3>
@@ -166,7 +190,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
 
                 <div className="modal__feature">
                   <div className="modal__feature-icon">
-                    <img src="/icon_people.svg" alt="Настройка вкуса" />
+                    <img src="/icon_people.svg" alt="Настройка вкуса" loading="lazy" width="24" height="24" />
                   </div>
                   <div className="modal__feature-content">
                     <h3 className="modal__feature-title">Настройка вкуса под вашу аудиторию</h3>
@@ -180,7 +204,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
 
                 <div className="modal__feature">
                   <div className="modal__feature-icon">
-                    <img src="/logistic.svg" alt="Поддержка и поставки" />
+                    <img src="/logistic.svg" alt="Поддержка и поставки" loading="lazy" width="24" height="24" />
                   </div>
                   <div className="modal__feature-content">
                     <h3 className="modal__feature-title">Поддержка и поставки без перебоев</h3>
@@ -196,7 +220,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
             <div className="modal__partners">
               <p className="modal__partners-title">Нам доверяют:</p>
               <div className="modal__partners-logos">
-                <img src="/we_partners.png" alt="Наши партнеры" />
+                <img src="/we_partners.png" alt="Наши партнеры" loading="lazy" width="120" height="32" />
               </div>
             </div>
           </div>
@@ -210,7 +234,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
               </button>
 
               <div className="modal__form-icon">
-                <img src="/icon_account.svg" alt="Отправить заявку" />
+                <img src="/icon_account.svg" alt="Отправить заявку" loading="lazy" width="32" height="32" />
               </div>
 
               <h3 className="modal__form-title">Отправить заявку?</h3>
@@ -269,12 +293,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
                   </label>
                 </div>
 
+                {error && <div className="modal__form-error">{error}</div>}
+
                 <button 
                   type="submit" 
                   className="modal__submit"
-                  disabled={!formData.consent}
+                  disabled={!formData.consent || isSubmitting}
                 >
-                  Записаться
+                  {isSubmitting ? 'Отправка...' : 'Записаться'}
                 </button>
               </form>
             </div>

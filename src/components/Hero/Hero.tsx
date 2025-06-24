@@ -17,6 +17,11 @@ const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Обработчик для иконки "Подобрать кофемашину"
+  const handleTopRightIconClick = () => {
+    onOpenModal();
+  };
+
   return (
     <section className={`hero ${isVisible ? 'hero--visible' : ''}`}>
       <div className="container hero__container">
@@ -63,7 +68,12 @@ const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
             <div className="hero__card-title hero__card-title--dark">Установка и сервис<br />— за наш счёт</div>
           </div>
           <div className="hero__card hero__card--blue hero__card--iconblock hero__card--bottom hero__card--3">
-            <div className="hero__iconblock hero__iconblock--topright">
+            <div
+              className="hero__iconblock hero__iconblock--topright"
+              onClick={handleTopRightIconClick}
+              style={{ cursor: 'pointer' }}
+              title="Подобрать кофемашину"
+            >
               <img src="/arrow-sm-diagonally.svg" alt="Подобрать кофемашину" className="hero__icon" />
             </div>
             <div className="hero__card-title hero__card-title--white">Подобрать кофемашину<br />— под ваш бизнес</div>
@@ -74,4 +84,4 @@ const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
   );
 };
 
-export default Hero; 
+export default Hero;

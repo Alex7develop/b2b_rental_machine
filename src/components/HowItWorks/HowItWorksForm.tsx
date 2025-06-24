@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import './HowItWorksForm.scss';
 
 interface HowItWorksFormProps {
@@ -14,6 +15,8 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
     email: '',
     consent: false
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -91,22 +94,40 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.consent) return;
-    
-    console.log('HowItWorksForm submitted:', formData);
-    
-    // Сброс формы
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      consent: false
-    });
-    
-    // Открытие модального окна успеха
-    onOpenSuccessModal();
+    setError(null);
+    if (!formData.consent) {
+      setError('Необходимо согласие на обработку данных');
+      return;
+    }
+    const TYPE = '1'; // 1 - Дегустация, 2 - Подбор кофемашины
+    if (TYPE !== '1' && TYPE !== '2') {
+      setError('Заполнена несуществующая форма');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        NAME: formData.name,
+        PHONE: formData.phone,
+        EMAIL: formData.email,
+        CONSENT: formData.consent ? 1 : 0,
+        TYPE,
+      };
+      const formDataObj = new URLSearchParams(payload as any);
+      const response = await axios.post('/process-data.php', formDataObj);
+      if (response.data && response.data.status === 'success') {
+        setFormData({ name: '', phone: '', email: '', consent: false });
+        onOpenSuccessModal();
+      } else if (response.data && response.data.status === 'error') {
+        setError(response.data.text || 'Ошибка при отправке. Попробуйте позже.');
+      }
+    } catch (err) {
+      setError('Ошибка при отправке. Попробуйте позже.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -132,7 +153,7 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
           <input 
             type="tel" 
             name="phone"
-            placeholder="+7 (___)-___-__-__" 
+            placeholder="+7 ( ___ ) ___-__-__" 
             className="howitworksform-input howitworksform-input--2"
             value={formData.phone}
             onChange={handleInputChange}
@@ -150,11 +171,12 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
           <button 
             type="submit" 
             className="howitworksform-submit"
-            disabled={!formData.consent}
+            disabled={!formData.consent || isSubmitting}
           >
-            Записаться на дегустацию
+            {isSubmitting ? 'Отправка...' : 'Записаться на дегустацию'}
             <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 5L12 10L7 15" stroke="#273889" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
+          {error && <div className="howitworksform-error">{error}</div>}
         </form>
         <div className="howitworksform-policy">
           <input 

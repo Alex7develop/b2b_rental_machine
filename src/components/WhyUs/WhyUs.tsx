@@ -62,7 +62,7 @@ const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
 
         <div className="why-us__content">
           <div className="why-us__image">
-            <img src="/wooman_image.png" alt="Довольная клиентка с кофе" />
+            <img src="/wooman_image.png" alt="Довольная клиентка с кофе" loading="lazy" width="490" height="490" />
           </div>
           
           <div className="why-us__steps-wrapper">

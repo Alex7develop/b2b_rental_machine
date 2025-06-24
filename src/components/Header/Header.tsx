@@ -74,13 +74,13 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
       <div className="container header__container">
         <div className="header__content">
           <div className="header__logo-block" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-            <img src="/featherIcon.svg" alt="Логотип" className="header__logo-icon" />
-            <img src="/Alephtrade.svg" alt="Алеф Трейд" className="header__logo-text" />
+            <img src="/AL.svg" alt="Логотип" className="header__logo-icon" />
+            {/* <img src="/Alephtrade.svg" alt="Алеф Трейд" className="header__logo-text" /> */}
           </div>
           
           {/* Десктопная навигация */}
           <nav className="header__nav header__nav--desktop">
-            <button className={`header__nav-link ${activeSection === 'home' ? 'header__nav-link--active' : ''}`} onClick={() => scrollToSection('home')}>Главная</button>
+            {/* <button className={`header__nav-link ${activeSection === 'home' ? 'header__nav-link--active' : ''}`} onClick={() => scrollToSection('home')}>Главная</button> */}
             <button className={`header__nav-link ${activeSection === 'steps' ? 'header__nav-link--active' : ''}`} onClick={() => scrollToSection('steps')}>Этапы</button>
             <button className={`header__nav-link ${activeSection === 'goal' ? 'header__nav-link--active' : ''}`} onClick={() => scrollToSection('goal')}>Наша цель</button>
             <button className={`header__nav-link ${activeSection === 'catalog' ? 'header__nav-link--active' : ''}`} onClick={() => scrollToSection('catalog')}>Каталог</button>
@@ -105,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
         {/* Мобильное меню */}
         <div className={`header__mobile-menu ${isMenuOpen ? 'header__mobile-menu--open' : ''}`}>
           <nav className="header__mobile-nav">
-            <button className={`header__mobile-link ${activeSection === 'home' ? 'header__mobile-link--active' : ''}`} onClick={() => scrollToSection('home')}>Главная</button>
+            {/* <button className={`header__mobile-link ${activeSection === 'home' ? 'header__mobile-link--active' : ''}`} onClick={() => scrollToSection('home')}>Главная</button> */}
             <button className={`header__mobile-link ${activeSection === 'steps' ? 'header__mobile-link--active' : ''}`} onClick={() => scrollToSection('steps')}>Этапы</button>
             <button className={`header__mobile-link ${activeSection === 'goal' ? 'header__mobile-link--active' : ''}`} onClick={() => scrollToSection('goal')}>Наша цель</button>
             <button className={`header__mobile-link ${activeSection === 'catalog' ? 'header__mobile-link--active' : ''}`} onClick={() => scrollToSection('catalog')}>Каталог</button>

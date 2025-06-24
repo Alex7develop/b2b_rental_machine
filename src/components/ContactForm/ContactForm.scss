@@ -311,7 +311,7 @@
 @media (max-width: 1024px) {
   .contact-form {
     &__content {
-      flex-direction: column;
+      flex-direction: row;
       gap: 40px;
     }
 
@@ -340,6 +340,9 @@
   .contact-form {
     padding: 40px 0;
 
+    &__content {
+      flex-direction: column;
+    }
     &__container {
       padding: 0 16px;
     }

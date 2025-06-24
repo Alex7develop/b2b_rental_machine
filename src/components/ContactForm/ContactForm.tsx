@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './ContactForm.scss';
 
 interface ContactFormProps {
@@ -8,24 +9,61 @@ interface ContactFormProps {
 const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    phone: '',
     agreed: false
   });
 
   const [errors, setErrors] = useState({
     name: '',
-    email: '',
+    phone: '',
     agreed: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Функция для форматирования телефона
+  const formatPhoneNumber = (value: string) => {
+    const phoneNumber = value.replace(/\D/g, '');
+    const normalizedNumber = phoneNumber.startsWith('8') ? '7' + phoneNumber.slice(1) : phoneNumber;
+    const withCountryCode = normalizedNumber.startsWith('7') ? normalizedNumber : '7' + normalizedNumber;
+    const limitedNumber = withCountryCode.slice(0, 11);
+    if (limitedNumber.length >= 1) {
+      let formatted = '+7';
+      if (limitedNumber.length > 1) {
+        formatted += ' (' + limitedNumber.slice(1, 4);
+        if (limitedNumber.length >= 4) {
+          formatted += ')';
+          if (limitedNumber.length > 4) {
+            formatted += '-' + limitedNumber.slice(4, 7);
+            if (limitedNumber.length > 7) {
+              formatted += '-' + limitedNumber.slice(7, 9);
+              if (limitedNumber.length > 9) {
+                formatted += '-' + limitedNumber.slice(9, 11);
+              }
+            }
+          }
+        }
+      }
+      return formatted;
+    }
+    return '';
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    if (name === 'phone') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: formatPhoneNumber(value)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
 
-    // Очищаем ошибку при изменении поля
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({
         ...prev,
@@ -37,18 +75,18 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
   const validateForm = () => {
     const newErrors = {
       name: '',
-      email: '',
+      phone: '',
       agreed: ''
     };
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Введите ваше имя';
+      newErrors.name = 'Введите имя';
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Введите вашу почту';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Введите корректный email';
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Введите номер телефона';
+    } else if (!/^(\+7\s?\(\d{3}\)\-\d{3}\-\d{2}\-\d{2})$/.test(formData.phone)) {
+      newErrors.phone = 'Введите корректный номер телефона';
     }
 
     if (!formData.agreed) {
@@ -56,28 +94,61 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
     }
 
     setErrors(newErrors);
-    return !newErrors.name && !newErrors.email && !newErrors.agreed;
+    return !newErrors.name && !newErrors.phone && !newErrors.agreed;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setError(null);
+    const TYPE = '1';
+    if (TYPE !== '1' && TYPE !== '2') {
+      setError('Заполнена несуществующая форма');
+      return;
+    }
     if (validateForm()) {
-      console.log('Form submitted:', formData);
-      // Сброс формы
-      setFormData({
-        name: '',
-        email: '',
-        agreed: false
-      });
-      // Сброс ошибок
-      setErrors({
-        name: '',
-        email: '',
-        agreed: ''
-      });
-      // Открытие модального окна успеха
-      onOpenSuccessModal();
+      setIsSubmitting(true);
+      try {
+        const payload = {
+          NAME: formData.name,
+          PHONE: formData.phone,
+          CONSENT: formData.agreed ? 1 : 0,
+          TYPE,
+        };
+        const formDataObj = new URLSearchParams(payload as any);
+        const response = await axios.post('/process-data.php', formDataObj, { responseType: 'text' });
+        let data;
+        try {
+          // Вытаскиваем JSON из строки, даже если есть мусор
+          const match = response.data.match(/\{[\s\S]*\}/);
+          data = match ? JSON.parse(match[0]) : {};
+        } catch (e) {
+          setError('Неожиданный ответ от сервера. Попробуйте позже.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        if (data.status === 'success') {
+          setFormData({
+            name: '',
+            phone: '',
+            agreed: false
+          });
+          setErrors({
+            name: '',
+            phone: '',
+            agreed: ''
+          });
+          onOpenSuccessModal();
+        } else if (data.status === 'error') {
+          setError(data.text || 'Ошибка при отправке. Попробуйте позже.');
+        } else {
+          setError('Неожиданный ответ от сервера. Попробуйте позже.');
+        }
+        setIsSubmitting(false);
+      } catch (err) {
+        setError('Ошибка при отправке. Попробуйте позже.');
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -94,7 +165,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
   };
 
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/79099457604', '_blank');
+    window.open('https://wa.me/79030002392', '_blank');
   };
 
   return (
@@ -128,7 +199,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Введите ваше имя"
+                  placeholder="Введите имя"
                   value={formData.name}
                   onChange={handleInputChange}
                   className={`contact-form__input ${errors.name ? 'contact-form__input--error' : ''}`}
@@ -139,22 +210,23 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
 
               <div className="contact-form__field">
                 <input
-                  type="email"
-                  name="email"
-                  placeholder="Введите вашу почту"
-                  value={formData.email}
+                  type="tel"
+                  name="phone"
+                  placeholder="Введите номер телефона"
+                  value={formData.phone}
                   onChange={handleInputChange}
-                  className={`contact-form__input ${errors.email ? 'contact-form__input--error' : ''}`}
+                  className={`contact-form__input ${errors.phone ? 'contact-form__input--error' : ''}`}
                   required
+                  maxLength={18}
                 />
                 <div className="contact-form__input-icon">
                   <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
                 </div>
-                {errors.email && <span className="contact-form__error">{errors.email}</span>}
+                {errors.phone && <span className="contact-form__error">{errors.phone}</span>}
               </div>
 
-              <button type="submit" className="contact-form__submit">
-                Записаться на дегустацию
+              <button type="submit" className="contact-form__submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Отправка...' : 'Записаться на дегустацию'}
                 <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
               </button>
 
@@ -177,6 +249,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
                 </label>
                 {errors.agreed && <span className="contact-form__error">{errors.agreed}</span>}
               </div>
+              {error && <div className="contact-form__error">{error}</div>}
             </form>
           </div>
         </div>
@@ -239,7 +312,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
               <img src="/arrow-sm-diagonally.svg" alt="WhatsApp" width="24" height="24" />
             </button>
             <div className="contact-form__contact-content">
-              <span className="contact-form__contact-text">WhatsApp</span>
+              <span className="contact-form__contact-text">Напишите в WhatsApp</span>
               <span className="contact-form__contact-subtitle">написать в мессенджер</span>
             </div>
           </div>

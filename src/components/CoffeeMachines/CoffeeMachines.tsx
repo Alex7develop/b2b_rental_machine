@@ -116,6 +116,18 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       boilerVolume: '4 литра',
       control: 'Полуавтомат',
       dimensions: '410 / 640 / 52 мм / 37 кг.'
+    },
+    {
+      id: '5',
+      name: 'Rancilio Classe 5 Leva',
+      description: 'Высокая версия машины с увеличенным клиренсом для больших чашек.',
+      cups: '150 чашек',
+      groups: '2GR',
+      image: '/img/classic_macmine/leva.svg',
+      height: 'Высокая',
+      boilerVolume: '11 литра',
+      control: 'Левер',
+      dimensions: '770 / 540 / 809 мм / 71 кг.'
     }
   ];
 
@@ -128,7 +140,7 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       groups: 'AUTO',
       image: '/img/automat_machine/WMF_1300_S.png',
       height: 'Basic Milk',
-      boilerVolume: 'Бак 4л + водопровод',
+      boilerVolume: 'Бак 4,5 л + водопровод',
       control: '50',
       dimensions: '325 / 574 / 670 мм',
       cupsPerDay: 120
@@ -140,7 +152,7 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       cups: '400 чашек',
       groups: 'AUTO',
       image: '/img/automat_machine/WMF_1100_S.png',
-      height: 'Basic Milk / Basic Steam',
+      height: 'Basic/Steam Milk',
       boilerVolume: 'бак 4,5 л + водопровод',
       control: '24',
       dimensions: '325 / 561 / 500 мм',
@@ -166,6 +178,19 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       cups: '350 чашек',
       groups: 'AUTO',
       image: '/img/automat_machine/k96L_black.png',
+      height: 'Есть',
+      boilerVolume: 'Бак 6л + водопровод',
+      control: '20',
+      dimensions: '580 / 530 / 700 мм',
+      cupsPerDay: 120
+    },
+    {
+      id: '9',
+      name: 'WMF 1300 S',
+      description: 'Инновационная машина с современным дизайном и автоматической калибровкой. Обеспечивает постоянное качество напитков.',
+      cups: '250 чашек',
+      groups: 'AUTO',
+      image: '/img/automat_machine/1300S.png',
       height: 'Есть',
       boilerVolume: 'Бак 6л + водопровод',
       control: '20',

@@ -7,8 +7,8 @@ const Footer: React.FC = () => {
       <div className="footer__container">
         <div className="footer__content">
           <div className="footer__logo">
-            <img src="/featherIcon.svg" alt="Алеф Трейд" className="footer__logo-icon" />
-            <img src="/Alephtrade.svg" alt="Alephtrade" className="footer__logo-text" />
+            <img src="/AL.svg" alt="Алеф Трейд" className="footer__logo-icon" loading="lazy" />
+            {/* <img src="/Alephtrade.svg" alt="Alephtrade" className="footer__logo-text" loading="lazy" width="80" height="20" /> */}
           </div>
           
           <div className="footer__info">

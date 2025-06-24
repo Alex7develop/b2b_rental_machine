@@ -47,7 +47,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ onOpenModal }) => {
           {/* Левый блок с кофе */}
           <div className="about-us__coffee-block">
             <div className="about-us__coffee-image">
-              <img src="/coffee.png" alt="Кофе" />
+              <img src="/coffee.png" alt="Кофе" loading="lazy" width="200" height="200" />
             </div>
             <div className="about-us__coffee-info">
               <h3>Impassion Blue Espresso</h3>
@@ -116,7 +116,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ onOpenModal }) => {
           {/* Блок партнеров */}
           <div className="about-us__partners-block">
             <div className="about-us__partners-image">
-              <img src="/partners.png" alt="Партнеры" />
+              <img src="/partners.png" alt="Партнеры" loading="lazy" width="300" height="80" />
             </div>
             <div className="about-us__partners-content">
               <h3 className="about-us__partners-title">
