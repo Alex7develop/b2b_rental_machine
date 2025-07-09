@@ -88,26 +88,117 @@
     justify-content: space-between;
   }
 
-  &__coffee-image {
-    text-align: center;
-    margin-bottom: 32px;
+  &__coffee-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    min-height: 20px;
+  }
+
+  &__coffee-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  &__coffee-navigation {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__nav-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #273889;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    padding: 0;
+
+    &:hover {
+      background: transparent;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
 
     img {
-      max-width: 200px;
-      height: auto;
+      width: 20px;
+      height: 20px;
+      transition: all 0.3s ease;
+      opacity: 0.6;
+    }
+
+    &:hover img {
+      opacity: 1;
+    }
+  }
+
+  &__coffee-image {
+    text-align: center;
+    margin-bottom: 24px;
+    margin-top: 20px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 280px;
+      height: 280px;
+      object-fit: contain;
+      transition: all 0.3s ease;
     }
   }
 
   &__coffee-info {
     width: 100%;
+    flex: 1;
     
     h3 {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
       color: #1a1a1a;
-      margin-bottom: 16px;
-      text-align: left;
+      text-align: center;
+      line-height: 1.3;
+      flex: 1;
+      margin: 0;
     }
+  }
+
+  &__coffee-title {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__coffee-main-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  &__coffee-second-name {
+    font-size: 18px;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.2;
+    margin: 0;
   }
 
   &__coffee-description {
@@ -115,7 +206,11 @@
     color: #666;
     line-height: 1.5;
     margin-bottom: 24px;
-    text-align: left;
+    // text-align: justify;
+    hyphens: auto;
+    min-height: 72px;
+    display: flex;
+    align-items: flex-start;
   }
 
   &__coffee-details {
@@ -127,9 +222,9 @@
   &__detail {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 8px 0;
-    // border-bottom: 1px solid #f0f0f0;
+    gap: 12px;
 
     &:last-child {
       border-bottom: none;
@@ -139,12 +234,34 @@
   &__detail-label {
     font-size: 14px;
     color: #666;
+    flex-shrink: 0;
+    min-width: 70px;
   }
 
   &__detail-value {
     font-size: 14px;
     font-weight: 500;
     color: #1a1a1a;
+    text-align: right;
+    flex: 1;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  &__coffee-counter {
+    // Стили счетчика удалены - больше не используется
+  }
+
+  &__counter-current {
+    // Стили счетчика удалены - больше не используется
+  }
+
+  &__counter-separator {
+    // Стили счетчика удалены - больше не используется
+  }
+
+  &__counter-total {
+    // Стили счетчика удалены - больше не используется
   }
 
   // Видео блок - блок 2
@@ -283,7 +400,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative;
     overflow: hidden;
     
     // Добавляем градиентный оверлей

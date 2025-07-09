@@ -18,12 +18,34 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
   };
 
   const handleModalOpen = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'header_mobile_cta_click');
+      window.ym(102940459, 'reachGoal', 'modal_open');
+      console.log('🎯 Яндекс цели отправлены: header_mobile_cta_click, modal_open');
+    }
     onOpenModal();
     closeMenu();
   };
 
+  const handleDesktopCTAClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'header_cta_click');
+      window.ym(102940459, 'reachGoal', 'modal_open');
+      console.log('🎯 Яндекс цели отправлены: header_cta_click, modal_open');
+    }
+    onOpenModal();
+  };
+
   // Функция для плавной прокрутки к разделу
   const scrollToSection = (sectionId: string) => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'navigation_click');
+      console.log('🔗 Яндекс цель отправлена: navigation_click');
+    }
+    
     if (sectionId === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -88,7 +110,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
           </nav>
           
           {/* Десктопная кнопка */}
-          <button className="header__cta header__cta--desktop" onClick={onOpenModal}>Оставить заявку</button>
+          <button className="header__cta header__cta--desktop" onClick={handleDesktopCTAClick}>Оставить заявку</button>
           
           {/* Бургер кнопка */}
           <button 

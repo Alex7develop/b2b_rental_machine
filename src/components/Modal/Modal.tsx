@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getUTMParamsFromStorage } from '../../utils/utm';
 import './Modal.scss';
+
+// Объявляем глобальные функции для Яндекс.Метрики
+declare global {
+  interface Window {
+    sendFormSuccessGoal?: (formType: string) => void;
+  }
+}
 
 interface ModalProps {
   isOpen: boolean;
@@ -118,12 +126,22 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
         setError('Заполнена несуществующая форма');
         return;
       }
+      
+      // Получаем UTM параметры
+      const utmParams = getUTMParamsFromStorage();
+      
       const payload = {
         NAME: formData.name,
         PHONE: formData.phone,
         EMAIL: formData.email,
         CONSENT: formData.consent ? 1 : 0,
         TYPE,
+        // Добавляем UTM параметры
+        UTM_SOURCE: utmParams.utm_source || '',
+        UTM_MEDIUM: utmParams.utm_medium || '',
+        UTM_CAMPAIGN: utmParams.utm_campaign || '',
+        UTM_TERM: utmParams.utm_term || '',
+        UTM_CONTENT: utmParams.utm_content || '',
         // SOURCE_ID: 'WEB',
         // SOURCE_DESCRIPTION: 'АлефТрейд B2B',
       };
@@ -132,6 +150,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSuccess }) => {
       if (response.data && (response.data.status === 'success')) {
         setFormData({ name: '', phone: '', email: '', consent: false, formType: 'Дегустация' });
         onSuccess();
+        if (typeof window.sendFormSuccessGoal === 'function') {
+          window.sendFormSuccessGoal('modal');
+        }
       } else if (response.data && response.data.status === 'error') {
         setError(response.data.text || 'Ошибка при отправке. Попробуйте позже.');
       }

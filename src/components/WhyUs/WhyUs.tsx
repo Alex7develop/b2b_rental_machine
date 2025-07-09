@@ -28,6 +28,36 @@ const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Обработчик для телефона
+  const handlePhoneClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'phone_click');
+      console.log('📞 Яндекс цель отправлена: phone_click');
+    }
+    window.location.href = 'tel:+79099457604';
+  };
+
+  const handleCTAClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'why_us_cta_click');
+      window.ym(102940459, 'reachGoal', 'modal_open');
+      console.log('🎯 Яндекс цели отправлены: why_us_cta_click, modal_open');
+    }
+    onOpenModal();
+  };
+
+  const handleAccordionClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'why_us_accordion_click');
+      window.ym(102940459, 'reachGoal', 'modal_open');
+      console.log('🎯 Яндекс цели отправлены: why_us_accordion_click, modal_open');
+    }
+    onOpenModal();
+  };
+
   const steps = [
     {
       number: '01',
@@ -93,13 +123,13 @@ const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
                     Оставьте заявку — подберём кофемашину и кофе под ваш кейс
                   </div>
                   <div className="why-us__cta-actions">
-                    <button className="why-us__cta-button" onClick={onOpenModal}>
+                    <button className="why-us__cta-button" onClick={handleCTAClick}>
                       Получить консультацию
                       <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <div className="why-us__cta-phone">+7 (909) 945-76-04</div>
+                    <div className="why-us__cta-phone" onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (909) 945-76-04</div>
                   </div>
                 </div>
               </div>
@@ -129,11 +159,11 @@ const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
                     Оставьте заявку — подберём кофемашину и кофе под ваш кейс
                   </div>
                   <div className="why-us__accordion-actions">
-                    <button className="why-us__accordion-button" onClick={onOpenModal}>
+                    <button className="why-us__accordion-button" onClick={handleAccordionClick}>
                       Получить консультацию
                       <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
                     </button>
-                    <div className="why-us__accordion-phone">+7 (909) 945-76-04</div>
+                    <div className="why-us__accordion-phone" onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (909) 945-76-04</div>
                   </div>
                 </div>
               </div>

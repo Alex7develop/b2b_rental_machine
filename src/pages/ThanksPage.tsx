@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import './ThanksPage.scss';
 
 const ThanksPage: React.FC = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Отправляем цель в Яндекс.Метрику при загрузке страницы
+    if (typeof window !== 'undefined' && window.sendThanksPageGoal) {
+      window.sendThanksPageGoal();
+    }
+    
+    // Также отправляем основную цель формы
+    if (typeof window !== 'undefined' && window.ym) {
+      window.ym(102940459, 'reachGoal', 'FORM_SUBMIT');
+      console.log('Яндекс цель FORM_SUBMIT отправлена');
+    }
+  }, []);
 
   const handleReturnToSite = () => {
     navigate('/');

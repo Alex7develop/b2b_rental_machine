@@ -22,8 +22,8 @@ interface CoffeeMachinesProps {
 }
 
 const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSuccessModal }) => {
-  const [activeTab, setActiveTab] = useState<'classic' | 'automatic'>('classic');
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [classicSlide, setClassicSlide] = useState(0);
+  const [automaticSlide, setAutomaticSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -63,11 +63,6 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
     };
   }, []);
 
-  // Сброс слайда при смене таба
-  useEffect(() => {
-    setCurrentSlide(0);
-  }, [activeTab]);
-
   const classicMachines: CoffeeMachine[] = [
     {
       id: '1',
@@ -83,6 +78,30 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
     },
     {
       id: '2',
+      name: 'Rancilio Classe 5 Leva',
+      description: 'Высокая версия машины с увеличенным клиренсом для больших чашек.',
+      cups: '150 чашек',
+      groups: '2GR',
+      image: '/img/classic_macmine/leva.svg',
+      height: 'Высокая',
+      boilerVolume: '11 литров',
+      control: 'Левер',
+      dimensions: '770 / 540 / 809 мм / 71 кг.'
+    },
+    {
+      id: '3',
+      name: 'Rancilio Classe 5 S',
+      description: 'Однокотловая эспрессо-кофемашина доступна в версиях с 1, 2, 3 группами, 1 группе с резервуаром (1GRT), 2 группы компактные (2GRC). Все версии оснащены полуавтоматическим дозированием (S). Технология Steady Brew (SB) доступна для...',
+      cups: '120 чашек',
+      groups: '2GR',
+      image: '/img/classic_macmine/Rancilio_Classe_5_S.png',
+      height: 'Низкая',
+      boilerVolume: '11 литров',
+      control: 'Полу-автомат',
+      dimensions: '771 / 539 / 520 мм / 74 кг.'
+    },
+    {
+      id: '4',
       name: 'Rancilio Classe 5 USB Tall',
       description: 'Однокотловая эспрессо-машина, доступная в вариантах 1, 2, 3 группы или 2 группы компактно (2GRC). Все версии оснащены автоматическим дозированием (USB). Технология Steady Brew (SB) доступна для...',
       cups: '120 чашек',
@@ -94,19 +113,7 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       dimensions: '410 / 640 / 52 мм / 38 кг.'
     },
     {
-      id: '3',
-      name: 'Rancilio Classe 5 S',
-      description: 'Однокотловая эспрессо-кофемашина доступна в версиях с 1, 2, 3 группами, 1 группе с резервуаром (1GRT), 2 группы компактные (2GRC). Все версии оснащены полуавтоматическим дозированием (S). Технология Steady Brew (SB) доступна для...',
-      cups: '120 чашек',
-      groups: '2GR',
-      image: '/img/classic_macmine/Rancilio_Classe_5_S.png',
-      height: 'Средняя',
-      boilerVolume: '5 литров',
-      control: 'Полуавтомат',
-      dimensions: '410 / 590 / 52 мм / 36 кг.'
-    },
-    {
-      id: '4',
+      id: '5',
       name: 'Rancilio Classe 5 S Tall',
       description: 'Высокая версия машины с увеличенным клиренсом для больших чашек. Обеспечивает стабильное качество напитков в течение всего дня.',
       cups: '150 чашек',
@@ -116,50 +123,12 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       boilerVolume: '4 литра',
       control: 'Полуавтомат',
       dimensions: '410 / 640 / 52 мм / 37 кг.'
-    },
-    {
-      id: '5',
-      name: 'Rancilio Classe 5 Leva',
-      description: 'Высокая версия машины с увеличенным клиренсом для больших чашек.',
-      cups: '150 чашек',
-      groups: '2GR',
-      image: '/img/classic_macmine/leva.svg',
-      height: 'Высокая',
-      boilerVolume: '11 литра',
-      control: 'Левер',
-      dimensions: '770 / 540 / 809 мм / 71 кг.'
     }
   ];
 
   const automaticMachines: CoffeeMachine[] = [
     {
-      id: '5',
-      name: 'WMF 1300 S',
-      description: 'Премиальная суперавтоматическая машина с сенсорным дисплеем и возможностью приготовления различных напитков. Встроенная система очистки и обслуживания.',
-      cups: '300 чашек',
-      groups: 'AUTO',
-      image: '/img/automat_machine/WMF_1300_S.png',
-      height: 'Basic Milk',
-      boilerVolume: 'Бак 4,5 л + водопровод',
-      control: '50',
-      dimensions: '325 / 574 / 670 мм',
-      cupsPerDay: 120
-    },
-    {
       id: '6',
-      name: 'WMF 1100 S',
-      description: 'Профессиональная автоматическая машина с двумя кофемолками и системой Fresh Brew. Идеальна для офисов и ресторанов с высокой проходимостью.',
-      cups: '400 чашек',
-      groups: 'AUTO',
-      image: '/img/automat_machine/WMF_1100_S.png',
-      height: 'Basic/Steam Milk',
-      boilerVolume: 'бак 4,5 л + водопровод',
-      control: '24',
-      dimensions: '325 / 561 / 500 мм',
-      cupsPerDay: 80
-    },
-    {
-      id: '7',
       name: 'WMF 950 S',
       description: 'Компактная автоматическая машина с интуитивным управлением и системой самоочистки. Быстрое приготовление качественных напитков одним нажатием.',
       cups: '250 чашек',
@@ -172,7 +141,33 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       cupsPerDay: 50
     },
     {
+      id: '7',
+      name: 'WMF 1100 S',
+      description: 'Профессиональная автоматическая машина с двумя кофемолками и системой Fresh Brew. Идеальна для офисов и ресторанов с высокой проходимостью.',
+      cups: '400 чашек',
+      groups: 'AUTO',
+      image: '/img/automat_machine/WMF_1100_S.png',
+      height: 'Basic Milk / Basic Steam',
+      boilerVolume: 'бак 4,5 л + водопровод',
+      control: '24',
+      dimensions: '325 / 561 / 500 мм',
+      cupsPerDay: 80
+    },
+    {
       id: '8',
+      name: 'WMF 1300 S',
+      description: 'Премиальная суперавтоматическая машина с сенсорным дисплеем и возможностью приготовления различных напитков. Встроенная система очистки и обслуживания.',
+      cups: '300 чашек',
+      groups: 'AUTO',
+      image: '/img/automat_machine/WMF_1300_S.png',
+      height: 'Basic Milk',
+      boilerVolume: 'Бак 4л + водопровод',
+      control: '50',
+      dimensions: '325 / 574 / 670 мм',
+      cupsPerDay: 120
+    },
+    {
+      id: '9',
       name: 'K96L Black',
       description: 'Инновационная машина с современным дизайном и автоматической калибровкой. Обеспечивает постоянное качество напитков.',
       cups: '350 чашек',
@@ -185,8 +180,8 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
       cupsPerDay: 120
     },
     {
-      id: '9',
-      name: 'WMF 1300 S',
+      id: '10',
+      name: 'WMF 1300 S Premium',
       description: 'Инновационная машина с современным дизайном и автоматической калибровкой. Обеспечивает постоянное качество напитков.',
       cups: '250 чашек',
       groups: 'AUTO',
@@ -199,40 +194,44 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
     }
   ];
 
-  const currentMachines = activeTab === 'classic' ? classicMachines : automaticMachines;
   const visibleCards = isMobile ? 1 : 3;
-  const maxSlide = Math.max(0, currentMachines.length - visibleCards);
+  const classicMaxSlide = Math.max(0, classicMachines.length - visibleCards);
+  const automaticMaxSlide = Math.max(0, automaticMachines.length - visibleCards);
 
-  const handleScrollbarClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleScrollbarClick = (event: React.MouseEvent<HTMLDivElement>, machineType: 'classic' | 'automatic') => {
     const rect = event.currentTarget.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
     const percentage = clickX / rect.width;
+    const maxSlide = machineType === 'classic' ? classicMaxSlide : automaticMaxSlide;
     const newSlide = Math.round(percentage * maxSlide);
-    setCurrentSlide(Math.max(0, Math.min(newSlide, maxSlide)));
+    
+    if (machineType === 'classic') {
+      setClassicSlide(Math.max(0, Math.min(newSlide, classicMaxSlide)));
+    } else {
+      setAutomaticSlide(Math.max(0, Math.min(newSlide, automaticMaxSlide)));
+    }
   };
 
-  return (
-    <section id="catalog" className={`coffee-machines ${isVisible ? 'coffee-machines--visible' : ''}`} ref={sectionRef}>
-      <div className="coffee-machines__container">
-        <div className="coffee-machines__header">
-          <h2 className="coffee-machines__title">
-            Выберите кофемашину под ваш бизнес
-          </h2>
-        </div>
+  const handleCardButtonClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'coffee_machine_card_button_click');
+      window.ym(102940459, 'reachGoal', 'modal_open');
+      console.log('🎯 Яндекс цели отправлены: coffee_machine_card_button_click, modal_open');
+    }
+    onOpenModal();
+  };
 
-        <div className="coffee-machines__tabs">
-          <button 
-            className={`coffee-machines__tab ${activeTab === 'classic' ? 'coffee-machines__tab--active' : ''}`}
-            onClick={() => setActiveTab('classic')}
-          >
-            Классические машины
-          </button>
-          <button 
-            className={`coffee-machines__tab ${activeTab === 'automatic' ? 'coffee-machines__tab--active' : ''}`}
-            onClick={() => setActiveTab('automatic')}
-          >
-            Супер автоматические
-          </button>
+  const renderMachineSection = (
+    machines: CoffeeMachine[], 
+    currentSlide: number, 
+    title: string,
+    machineType: 'classic' | 'automatic'
+  ) => {
+    return (
+      <div className="coffee-machines__section">
+        <div className="coffee-machines__section-header">
+          <h3 className="coffee-machines__section-title">{title}</h3>
         </div>
 
         <div className="coffee-machines__slider">
@@ -241,10 +240,10 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
               className="coffee-machines__track"
               style={isMobile ? {
                 transform: `translateX(-${currentSlide * 100}vw)`,
-                width: `${currentMachines.length * 100}vw`
+                width: `${machines.length * 100}vw`
               } : {}}
             >
-              {(isMobile ? currentMachines : currentMachines.slice(currentSlide, currentSlide + visibleCards)).map((machine, index) => (
+              {(isMobile ? machines : machines.slice(currentSlide, currentSlide + visibleCards)).map((machine, index) => (
                 <div 
                   key={machine.id} 
                   className="coffee-machines__slide"
@@ -267,12 +266,12 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
                     </div>
                     
                     <div className="coffee-machines__card-content">
-                      <h3 className="coffee-machines__card-title">
+                      <h4 className="coffee-machines__card-title">
                         {machine.name}
-                      </h3>
+                      </h4>
                       
                       <div className="coffee-machines__card-specs">
-                        {activeTab === 'classic' ? (
+                        {machineType === 'classic' ? (
                           <>
                             <div className="coffee-machines__card-spec">
                               <span className="coffee-machines__card-spec-label">Высота групп:</span>
@@ -313,7 +312,7 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
                         )}
                       </div>
                       
-                      <button className="coffee-machines__card-button" onClick={onOpenModal}>
+                      <button className="coffee-machines__card-button" onClick={handleCardButtonClick}>
                         Заказать
                         <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
                       </button>
@@ -324,23 +323,43 @@ const CoffeeMachines: React.FC<CoffeeMachinesProps> = ({ onOpenModal, onOpenSucc
             </div>
           </div>
           
-          {currentMachines.length > visibleCards && (
+          {machines.length > visibleCards && (
             <div className="coffee-machines__scrollbar">
               <div 
                 className="coffee-machines__scrollbar-track"
-                onClick={handleScrollbarClick}
+                onClick={(e) => handleScrollbarClick(e, machineType)}
               >
                 <div 
                   className="coffee-machines__scrollbar-thumb"
                   style={{ 
-                    width: `${(visibleCards / currentMachines.length) * 100}%`,
-                    left: `${(currentSlide / (currentMachines.length - visibleCards)) * (100 - (visibleCards / currentMachines.length) * 100)}%`
+                    width: `${(visibleCards / machines.length) * 100}%`,
+                    left: `${(currentSlide / (machines.length - visibleCards)) * (100 - (visibleCards / machines.length) * 100)}%`
                   }}
                 />
               </div>
             </div>
           )}
         </div>
+      </div>
+    );
+  };
+
+  return (
+    <section id="catalog" className={`coffee-machines ${isVisible ? 'coffee-machines--visible' : ''}`} ref={sectionRef}>
+      <div className="coffee-machines__container">
+        {renderMachineSection(
+          classicMachines, 
+          classicSlide, 
+          'Выберите классическую кофемашину',
+          'classic'
+        )}
+
+        {renderMachineSection(
+          automaticMachines, 
+          automaticSlide, 
+          'Выберите супер автоматическую кофемашину',
+          'automatic'
+        )}
 
         <div className="coffee-machines__form">
           <HowItWorksForm onOpenSuccessModal={onOpenSuccessModal} />

@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getUTMParamsFromStorage } from '../../utils/utm';
 import './ContactForm.scss';
+
+// Объявляем глобальные функции для Яндекс.Метрики
+declare global {
+  interface Window {
+    sendFormSuccessGoal?: (formType: string) => void;
+  }
+}
 
 interface ContactFormProps {
   onOpenSuccessModal: () => void;
@@ -108,11 +116,20 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
+        // Получаем UTM параметры
+        const utmParams = getUTMParamsFromStorage();
+        
         const payload = {
           NAME: formData.name,
           PHONE: formData.phone,
           CONSENT: formData.agreed ? 1 : 0,
           TYPE,
+          // Добавляем UTM параметры
+          UTM_SOURCE: utmParams.utm_source || '',
+          UTM_MEDIUM: utmParams.utm_medium || '',
+          UTM_CAMPAIGN: utmParams.utm_campaign || '',
+          UTM_TERM: utmParams.utm_term || '',
+          UTM_CONTENT: utmParams.utm_content || '',
         };
         const formDataObj = new URLSearchParams(payload as any);
         const response = await axios.post('/process-data.php', formDataObj, { responseType: 'text' });
@@ -128,6 +145,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
         }
 
         if (data.status === 'success') {
+          // Отправляем цель в Яндекс.Метрику
+          if (window.sendFormSuccessGoal) {
+            window.sendFormSuccessGoal('contact');
+          }
+          
           setFormData({
             name: '',
             phone: '',
@@ -153,18 +175,61 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
   };
 
   const handleEmailClick = () => {
-    window.location.href = 'mailto:hello@yourcoffee.ru';
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'email_choice');
+      console.log('📧 Яндекс цель отправлена: email_choice');
+    }
+    window.location.href = 'mailto:coffee_rent@alephtrade.com';
+  };
+
+  // Обработчик для копирования email
+  const handleEmailCopy = async (email: string) => {
+    try {
+      await navigator.clipboard.writeText(email);
+      // Отправляем цель в Яндекс.Метрику
+      if (window.ym) {
+        window.ym(102940459, 'reachGoal', 'email_copy');
+        console.log('📧 Яндекс цель отправлена: email_copy');
+      }
+      console.log('Email скопирован в буфер обмена');
+    } catch (err) {
+      console.error('Ошибка копирования:', err);
+    }
+  };
+
+  // Обработчик клавиш для email
+  const handleEmailKeyDown = (e: React.KeyboardEvent, email: string) => {
+    if (e.ctrlKey && e.key === 'c') {
+      e.preventDefault();
+      handleEmailCopy(email);
+    }
   };
 
   const handleAddressClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'address_click');
+      console.log('📍 Яндекс цель отправлена: address_click');
+    }
     window.open('https://yandex.ru/maps/213/moscow/?ll=37.542964%2C55.776237&mode=routes&rtext=~55.775936%2C37.542454&rtt=mt&ruri=~&z=18', '_blank');
   };
 
   const handlePhoneClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'phone_click');
+      console.log('📞 Яндекс цель отправлена: phone_click');
+    }
     window.location.href = 'tel:+79099457604';
   };
 
   const handleWhatsAppClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'whatsapp_click');
+      console.log('💬 Яндекс цель отправлена: whatsapp_click');
+    }
     window.open('https://wa.me/79030002392', '_blank');
   };
 
@@ -183,7 +248,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
           </div>
 
           <div className="contact-form__form-section">
-            <div className="contact-form__phone">
+            <div 
+              className="contact-form__phone"
+              onClick={handlePhoneClick}
+              style={{ cursor: 'pointer' }}
+            >
               +7 (909) 945-76-04
             </div>
             
@@ -265,7 +334,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
               <img src="/arrow-sm-diagonally.svg" alt="Email" width="24" height="24" />
             </button>
             <div className="contact-form__contact-content">
-              <span className="contact-form__contact-text">hello@yourcoffee.ru</span>
+              <span 
+                className="contact-form__contact-text-mail"
+                onClick={handleEmailClick}
+                onKeyDown={(e) => handleEmailKeyDown(e, 'coffee_rent@alephtrade.com')}
+                style={{ cursor: 'pointer' }}
+                tabIndex={0}
+                title="Нажмите для отправки email или Ctrl+C для копирования"
+              >
+                coffee_rent@alephtrade.com
+              </span>
               <span className="contact-form__contact-subtitle">написать на почту</span>
             </div>
           </div>
@@ -281,7 +359,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
             </button>
             <div className="contact-form__contact-content">
               <span className="contact-form__contact-text">
-                Метро Беговая – 5 минут пешком
+                Метро Беговая –<br />5 минут пешком
               </span>
               <span className="contact-form__contact-subtitle">наш главный офис</span>
             </div>

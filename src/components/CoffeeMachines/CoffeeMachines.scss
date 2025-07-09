@@ -14,14 +14,9 @@
       animation-delay: 0.2s;
     }
 
-    .coffee-machines__tabs {
+    .coffee-machines__section {
       animation: fadeInUp 0.6s ease forwards;
       animation-delay: 0.4s;
-    }
-
-    .coffee-machines__slider {
-      animation: fadeInUp 0.6s ease forwards;
-      animation-delay: 0.6s;
     }
 
     .coffee-machines__form {
@@ -51,42 +46,31 @@
     transform: translateY(30px);
   }
 
-  &__tabs {
-    display: flex;
-    justify-content: center;
-    gap: 0;
-    margin-bottom: 60px;
-    background: transparent;
-    border-bottom: 2px solid #e2e8f0;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 60px;
+  &__section {
+    margin-bottom: 80px;
     opacity: 0;
     transform: translateY(30px);
+
+    &:last-of-type {
+      margin-bottom: 40px;
+    }
   }
 
-  &__tab {
-    flex: 1;
-    padding: 16px 32px;
-    background: transparent;
-    border: none;
-    border-bottom: 3px solid transparent;
-    font-size: 16px;
-    font-weight: 600;
-    color: #94a3b8;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
+  &__section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
 
-    &--active {
-      color: rgb(38, 53, 140);;
-      border-bottom-color: rgb(38, 53, 140);;
-    }
+  &__section-title {
+    font-family: Inter;
+font-weight: 700;
+font-style: Bold;
+font-size: 44px;
+leading-trim: NONE;
+line-height: 52.8px;
+letter-spacing: 0%;
+text-align: center;
 
-    &:hover:not(&--active) {
-      color: #64748b;
-    }
   }
 
   &__slider {
@@ -94,12 +78,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    // margin-bottom: 80px;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    transform: translateY(0);
     position: relative;
     width: 100%;
-    // gap: 40px;
   }
 
   &__arrow {
@@ -307,28 +289,44 @@
 
   &__scrollbar {
     width: 100%;
-    max-width: 400px;
-    height: 4px;
-    margin-top: 20px;
+    max-width: 1100px;
+    height: 12px;
+    margin-top: 24px;
   }
 
   &__scrollbar-track {
     width: 100%;
     height: 100%;
     background: #e2e8f0;
-    border-radius: 2px;
+    border-radius: 6px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    
+    &:hover {
+      background: #cbd5e1;
+    }
   }
 
   &__scrollbar-thumb {
     height: 100%;
-    background: #4f46e5;
-    border-radius: 2px;
+    background: rgb(38, 53, 140);
+    border-radius: 6px;
     position: absolute;
     top: 0;
-    transition: left 0.3s ease;
-    cursor: pointer;
+    transition: left 0.3s ease, background-color 0.2s ease;
+    cursor: grab;
+    user-select: none;
+    
+    &:hover {
+      background: #4338ca;
+    }
+    
+    &:active {
+      cursor: grabbing;
+      background: #3730a3;
+    }
   }
 
   &__form {
@@ -362,13 +360,16 @@
       margin-bottom: 40px;
     }
 
-    &__tabs {
-      margin-bottom: 40px;
+    &__section {
+      margin-bottom: 60px;
     }
 
-    &__tab {
-      padding: 12px 20px;
-      font-size: 14px;
+    &__section-header {
+      margin-bottom: 32px;
+    }
+
+    &__section-title {
+      font-size: 28px;
     }
 
     &__slider {
@@ -441,13 +442,20 @@
       margin-bottom: 32px;
     }
 
-    &__tabs {
-      margin-bottom: 32px;
+    &__section {
+      margin-bottom: 40px;
     }
 
-    &__tab {
-      font-size: 14px;
-      padding: 12px 20px;
+    &__section-header {
+      margin-bottom: 24px;
+    }
+
+    &__section-title {
+      font-size: 24px;
+    }
+
+    &__slider {
+      margin-bottom: 40px;
     }
 
     &__slides {
@@ -533,14 +541,16 @@
       margin-bottom: 32px;
     }
 
-    &__tabs {
-      margin-bottom: 32px;
-      gap: 8px;
+    &__section {
+      margin-bottom: 40px;
     }
 
-    &__tab {
-      padding: 10px 16px;
-      font-size: 13px;
+    &__section-header {
+      margin-bottom: 24px;
+    }
+
+    &__section-title {
+      font-size: 24px;
     }
 
     &__slider {
@@ -613,16 +623,17 @@
     }
 
     &__scrollbar {
-      height: 4px;
+      height: 12px;
       margin-top: 24px;
     }
 
     &__scrollbar-track {
-      height: 4px;
+      height: 12px;
     }
 
     &__scrollbar-thumb {
-      height: 4px;
+      height: 12px;
+      border-radius: 6px;
       width: 20%;
     }
   }

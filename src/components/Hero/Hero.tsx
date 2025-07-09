@@ -19,7 +19,56 @@ const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
 
   // Обработчик для иконки "Подобрать кофемашину"
   const handleTopRightIconClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'hero_icon_click');
+      window.ym(102940459, 'reachGoal', 'modal_open');
+      console.log('🎯 Яндекс цели отправлены: hero_icon_click, modal_open');
+    }
     onOpenModal();
+  };
+
+  // Обработчик для телефона
+  const handlePhoneClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'phone_click');
+      console.log('📞 Яндекс цель отправлена: phone_click');
+    }
+    window.location.href = 'tel:+79099457604';
+  };
+
+  // Обработчик для email
+  const handleEmailClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'email_choice');
+      console.log('📧 Яндекс цель отправлена: email_choice');
+    }
+    window.location.href = 'mailto:coffee_rent@alephtrade.com';
+  };
+
+  // Обработчик для копирования email
+  const handleEmailCopy = async (email: string) => {
+    try {
+      await navigator.clipboard.writeText(email);
+      // Отправляем цель в Яндекс.Метрику
+      if (window.ym) {
+        window.ym(102940459, 'reachGoal', 'email_copy');
+        console.log('📧 Яндекс цель отправлена: email_copy');
+      }
+      console.log('Email скопирован в буфер обмена');
+    } catch (err) {
+      console.error('Ошибка копирования:', err);
+    }
+  };
+
+  // Обработчик клавиш для email
+  const handleEmailKeyDown = (e: React.KeyboardEvent, email: string) => {
+    if (e.ctrlKey && e.key === 'c') {
+      e.preventDefault();
+      handleEmailCopy(email);
+    }
   };
 
   return (
@@ -45,10 +94,27 @@ const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
                 — это простой способ повысить уровень сервиса и сэкономить на оборудовании
               </div>
               <div className="hero__actions">
-                <button className="hero__button" onClick={onOpenModal}>Оставить заявку</button>
+                <button className="hero__button" onClick={() => {
+                  // Отправляем цель в Яндекс.Метрику
+                  if (window.ym) {
+                    window.ym(102940459, 'reachGoal', 'hero_button_click');
+                    window.ym(102940459, 'reachGoal', 'modal_open');
+                    console.log('🎯 Яндекс цели отправлены: hero_button_click, modal_open');
+                  }
+                  onOpenModal();
+                }}>Оставить заявку</button>
                 <div className="hero__contacts">
-                  <span className="hero__phone">+7 (909) 945-76-04</span>
-                  <span className="hero__email">coffee_rent@alephtrade.com</span>
+                  <span className="hero__phone" onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (909) 945-76-04</span>
+                  <span 
+                    className="hero__email" 
+                    onClick={handleEmailClick} 
+                    onKeyDown={(e) => handleEmailKeyDown(e, 'coffee_rent@alephtrade.com')}
+                    style={{ cursor: 'pointer' }}
+                    tabIndex={0}
+                    title="Нажмите для отправки email или Ctrl+C для копирования"
+                  >
+                    coffee_rent@alephtrade.com
+                  </span>
                 </div>
               </div>
             </div>

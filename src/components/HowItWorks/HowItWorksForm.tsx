@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { getUTMParamsFromStorage } from '../../utils/utm';
 import './HowItWorksForm.scss';
+
+// Объявляем глобальные функции для Яндекс.Метрики
+declare global {
+  interface Window {
+    sendFormSuccessGoal?: (formType: string) => void;
+  }
+}
 
 interface HowItWorksFormProps {
   onOpenSuccessModal: () => void;
@@ -108,18 +116,30 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
     }
     setIsSubmitting(true);
     try {
+      // Получаем UTM параметры
+      const utmParams = getUTMParamsFromStorage();
+      
       const payload = {
         NAME: formData.name,
         PHONE: formData.phone,
         EMAIL: formData.email,
         CONSENT: formData.consent ? 1 : 0,
         TYPE,
+        // Добавляем UTM параметры
+        UTM_SOURCE: utmParams.utm_source || '',
+        UTM_MEDIUM: utmParams.utm_medium || '',
+        UTM_CAMPAIGN: utmParams.utm_campaign || '',
+        UTM_TERM: utmParams.utm_term || '',
+        UTM_CONTENT: utmParams.utm_content || '',
       };
       const formDataObj = new URLSearchParams(payload as any);
       const response = await axios.post('/process-data.php', formDataObj);
       if (response.data && response.data.status === 'success') {
         setFormData({ name: '', phone: '', email: '', consent: false });
         onOpenSuccessModal();
+        if (window.sendFormSuccessGoal) {
+          window.sendFormSuccessGoal('howitworks');
+        }
       } else if (response.data && response.data.status === 'error') {
         setError(response.data.text || 'Ошибка при отправке. Попробуйте позже.');
       }
@@ -130,10 +150,20 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
     }
   };
 
+  // Обработчик для телефона
+  const handlePhoneClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'phone_click');
+      console.log('📞 Яндекс цель отправлена: phone_click');
+    }
+    window.location.href = 'tel:+79099457604';
+  };
+
   return (
     <div className={`howitworksform-block ${isVisible ? 'howitworksform-block--visible' : ''}`} ref={formRef}>
       <div className="howitworksform-phonebar">
-        <span>+7 (909) 945-76-04</span>
+        <span onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (909) 945-76-04</span>
       </div>
       <div className="howitworksform-content">
         <div className="howitworksform-title">Попробуйте кофе,<br />который клиенты запомнят</div>
