@@ -38,6 +38,26 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
     onOpenModal();
   };
 
+  // Обработчик для Telegram
+  const handleTelegramClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'telegram_click');
+      console.log('📱 Яндекс цель отправлена: telegram_click');
+    }
+    window.open('https://t.me/coffee_rent', '_blank');
+  };
+
+  // Обработчик для WhatsApp
+  const handleWhatsAppClick = () => {
+    // Отправляем цель в Яндекс.Метрику
+    if (window.ym) {
+      window.ym(102940459, 'reachGoal', 'whatsapp_click');
+      console.log('💬 Яндекс цель отправлена: whatsapp_click');
+    }
+    window.open('https://wa.me/79030002392', '_blank');
+  };
+
   // Функция для плавной прокрутки к разделу
   const scrollToSection = (sectionId: string) => {
     // Отправляем цель в Яндекс.Метрику
@@ -108,6 +128,24 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
             <button className={`header__nav-link ${activeSection === 'catalog' ? 'header__nav-link--active' : ''}`} onClick={() => scrollToSection('catalog')}>Каталог</button>
             <button className={`header__nav-link ${activeSection === 'coffee-types' ? 'header__nav-link--active' : ''}`} onClick={() => scrollToSection('coffee-types')}>Виды кофе</button>
           </nav>
+          
+          {/* Иконки социальных сетей */}
+          <div className="header__social-icons">
+            <button 
+              className="header__social-icon"
+              onClick={handleTelegramClick}
+              aria-label="Telegram"
+            >
+              <img src="/telegram.svg" alt="Telegram" width="24" height="24" />
+            </button>
+            <button 
+              className="header__social-icon"
+              onClick={handleWhatsAppClick}
+              aria-label="WhatsApp"
+            >
+              <img src="/whatsapp.svg" alt="WhatsApp" width="24" height="24" />
+            </button>
+          </div>
           
           {/* Десктопная кнопка */}
           <button className="header__cta header__cta--desktop" onClick={handleDesktopCTAClick}>Оставить заявку</button>

@@ -253,7 +253,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
               onClick={handlePhoneClick}
               style={{ cursor: 'pointer' }}
             >
-              +7 (909) 945-76-04
+              +7 (903) 000-23-92
             </div>
             
             <div className="contact-form__form-header">
@@ -375,7 +375,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onOpenSuccessModal }) => {
               <img src="/arrow-sm-diagonally.svg" alt="Телефон" width="24" height="24" />
             </button>
             <div className="contact-form__contact-content">
-              <span className="contact-form__contact-text">+7 (909) 945-76-04</span>
+              <span className="contact-form__contact-text">+7 (903) 000-23-92</span>
               <span className="contact-form__contact-subtitle">позвонить</span>
             </div>
           </div>

@@ -129,7 +129,7 @@ const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
                         <path d="M7 5L12 10L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <div className="why-us__cta-phone" onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (909) 945-76-04</div>
+                    <div className="why-us__cta-phone" onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (903) 000-23-92</div>
                   </div>
                 </div>
               </div>
@@ -163,7 +163,7 @@ const WhyUs: React.FC<WhyUsProps> = ({ onOpenModal }) => {
                       Получить консультацию
                       <img src="/arrow-sm-diagonally.svg" alt="Arrow" width="16" height="16" />
                     </button>
-                    <div className="why-us__accordion-phone" onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (909) 945-76-04</div>
+                    <div className="why-us__accordion-phone" onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (903) 000-23-92</div>
                   </div>
                 </div>
               </div>

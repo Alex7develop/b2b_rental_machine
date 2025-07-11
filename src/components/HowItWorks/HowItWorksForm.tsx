@@ -163,7 +163,7 @@ const HowItWorksForm: React.FC<HowItWorksFormProps> = ({ onOpenSuccessModal }) =
   return (
     <div className={`howitworksform-block ${isVisible ? 'howitworksform-block--visible' : ''}`} ref={formRef}>
       <div className="howitworksform-phonebar">
-        <span onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (909) 945-76-04</span>
+        <span onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>+7 (903) 000-23-92</span>
       </div>
       <div className="howitworksform-content">
         <div className="howitworksform-title">Попробуйте кофе,<br />который клиенты запомнят</div>

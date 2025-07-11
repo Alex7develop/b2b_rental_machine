@@ -65,6 +65,38 @@
     }
   }
 
+  &__social-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  &__social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    
+    &:hover {
+      background: rgba(39, 56, 137, 0.1);
+      transform: scale(1.1);
+    }
+    
+    img {
+      width: 24px;
+      height: 24px;
+      transition: opacity 0.2s;
+    }
+  }
+
   &__cta {
     background: #fff;
     color: #273889;
@@ -235,6 +267,22 @@
         font-size: 16px;
       }
     }
+
+    &__social-icons {
+      margin-left: 16px;
+      margin-right: 16px;
+      gap: 8px;
+    }
+
+    &__social-icon {
+      width: 36px;
+      height: 36px;
+      
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
     
     &__cta {
       font-size: 16px;
@@ -265,8 +313,9 @@
       height: 16px;
     }
     
-    // Скрываем десктопную навигацию и кнопку
+    // Скрываем десктопную навигацию, иконки и кнопку
     &__nav--desktop,
+    &__social-icons,
     &__cta--desktop {
       display: none;
     }
